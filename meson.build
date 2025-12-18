@@ -136,6 +136,7 @@ os_linux  = false
 os_win32  = false
 os_darwin = false
 os_android = false
+os_wasi = false
 
 cc = meson.get_compiler('c')
 
@@ -163,6 +164,8 @@ elif host_machine.system() == 'android'
   os_android = true
 elif host_machine.system() == 'linux'
   os_linux = true
+elif host_machine.system() == 'wasip1'
+  os_wasi = true
 endif
 os_unix = not os_win32
 
@@ -171,6 +174,11 @@ if os_darwin
   x11_enabled = false
 else
   macos_enabled = false
+endif
+
+if os_wasi
+  wayland_enabled = false
+  x11_enabled = false
 endif
 
 if os_win32
