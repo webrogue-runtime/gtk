@@ -1733,6 +1733,9 @@ gtk_print_dialog_print_file (GtkPrintDialog       *self,
                              GAsyncReadyCallback   callback,
                              gpointer              user_data)
 {
+#ifdef __wasi__
+  abort();
+#else
   GTask *task;
 #ifdef HAVE_GIO_UNIX
   GdkDisplay *display;
@@ -1816,6 +1819,7 @@ gtk_print_dialog_print_file (GtkPrintDialog       *self,
                            GTK_DIALOG_ERROR, GTK_DIALOG_ERROR_FAILED,
                            "GtkPrintDialog is not supported on this platform");
   g_object_unref (task);
+#endif
 #endif
 }
 

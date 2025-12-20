@@ -1850,7 +1850,11 @@ static double
 _round (guint mode, double a, double b)
 {
   int old_mode;
+#ifdef __wasi__
+  int modes[] = { FE_TONEAREST, FE_TONEAREST, FE_TONEAREST, FE_TONEAREST };
+#else
   int modes[] = { FE_TONEAREST, FE_UPWARD, FE_DOWNWARD, FE_TOWARDZERO };
+#endif
   double result;
 
   if (b == 0)

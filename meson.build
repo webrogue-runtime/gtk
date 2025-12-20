@@ -129,6 +129,7 @@ broadway_enabled = get_option('broadway-backend')
 macos_enabled    = get_option('macos-backend')
 win32_enabled    = get_option('win32-backend')
 android_enabled  = get_option('android-backend')
+webrogue_enabled  = get_option('webrogue-backend')
 vulkan_enabled   = get_option('vulkan')
 
 os_unix   = false
@@ -179,6 +180,8 @@ endif
 if os_wasi
   wayland_enabled = false
   x11_enabled = false
+else
+  webrogue_enabled = false
 endif
 
 if os_win32
@@ -725,16 +728,24 @@ endif
 # Uses meson's custom vulkan dependency searching. Set the VULKAN_SDK env var
 # to use a custom path for the Vulkan SDK. Bugs that are found with it should
 # be reported upstream and fixed.
+if host_machine.system() == 'wasip1'
+  have_vulkan = true
+  vulkan_pkg_found = false
+  vulkan_dep = []
+  glslc = find_program('glslc', required: vulkan_enabled)
+else
 vulkan_dep = dependency('vulkan',
                         version: vulkan_req,
                         required: vulkan_enabled)
-glslc = find_program('glslc', required: vulkan_enabled)
+
+
 if vulkan_dep.found() and glslc.found()
   have_vulkan = true
   vulkan_pkg_found = vulkan_dep.type_name() == 'pkgconfig'
 else
   have_vulkan = false
   vulkan_pkg_found = false
+endif
 endif
 
 libdrm_dep = dependency('libdrm', required: os_linux)
@@ -991,7 +1002,7 @@ gsk_packages = [ 'graphene-gobject-1.0 @0@'.format(graphene_req) ]
 gtk_packages = [ 'gio-2.0 @0@'.format(glib_req) ]
 
 enabled_backends = []
-foreach backend: [ 'android', 'broadway', 'macos', 'wayland', 'win32', 'x11', ]
+foreach backend: [ 'android', 'broadway', 'macos', 'wayland', 'win32', 'x11', 'webrogue', ]
   if get_variable('@0@_enabled'.format(backend))
     enabled_backends += backend
   endif
@@ -1078,7 +1089,11 @@ summary('Display backends', enabled_backends, section: 'Components')
 summary('Print backends', print_backends, section: 'Components')
 summary('Media backends', media_backends, section: 'Components')
 
+if host_machine.system() == 'wasip1'
+summary('Vulkan support', true, section: 'Features')
+else
 summary('Vulkan support', vulkan_dep.found(), section: 'Features')
+endif
 summary('Cloud support', cloudproviders_dep.found(), section: 'Features')
 summary('Sysprof support', libsysprof_capture_dep.found(), section: 'Features')
 summary('Colord support', colord_dep.found(), section: 'Features')

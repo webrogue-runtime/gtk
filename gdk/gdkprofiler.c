@@ -23,7 +23,9 @@
 #include "gdkprofilerprivate.h"
 
 #include <sys/types.h>
+#ifndef __wasi__
 #include <signal.h>
+#endif
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
