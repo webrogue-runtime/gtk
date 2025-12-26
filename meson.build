@@ -129,7 +129,7 @@ broadway_enabled = get_option('broadway-backend')
 macos_enabled    = get_option('macos-backend')
 win32_enabled    = get_option('win32-backend')
 android_enabled  = get_option('android-backend')
-webrogue_enabled  = get_option('webrogue-backend')
+webrogue_enabled = get_option('webrogue-backend')
 vulkan_enabled   = get_option('vulkan')
 
 os_unix   = false
@@ -959,9 +959,13 @@ subdir('gdk')
 subdir('gsk')
 subdir('gtk')
 
+if host_machine.system() != 'wasip1'
 subdir('tools')
+endif
 subdir('po')
+if host_machine.system() != 'wasip1'
 subdir('docs/reference')
+endif
 if get_option('build-demos')
   subdir('demos')
 endif

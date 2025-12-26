@@ -1141,6 +1141,7 @@ libgtk_static = static_library('gtk',
   link_with: [libgtk_css, libgdk, libgsk ],
 )
 
+if host_machine.system() != 'wasip1'
 libgtk = shared_library('gtk-4',
   c_args: gtk_cargs + common_cflags,
   include_directories: [confinc, gdkinc, gskinc, gtkinc],
@@ -1153,6 +1154,9 @@ libgtk = shared_library('gtk-4',
   gnu_symbol_visibility: 'hidden',
   install: true,
 )
+else
+libgtk = libgtk_static
+endif
 
 gtk_dep_sources = [gtkconfig, gtkversion, gtktypebuiltins_h]
 
@@ -1329,12 +1333,14 @@ if build_gir
   gtk_dep_sources += gtk_gir
 endif
 
+if host_machine.system() != 'wasip1'
 libgtk_dep = declare_dependency(sources: gtk_dep_sources,
   include_directories: [confinc, gtkinc],
   dependencies: gtk_deps + [libgtk_css_dep, libgdk_dep, libgsk_dep],
   link_with: libgtk,
   link_args: common_ldflags,
 )
+endif
 
 libgtk_static_dep = declare_dependency(sources: gtk_dep_sources,
   include_directories: [confinc, gtkinc],
@@ -1342,5 +1348,9 @@ libgtk_static_dep = declare_dependency(sources: gtk_dep_sources,
   link_with: [libgtk_static, libgtk_css, libgdk, libgsk ],
   link_args: common_ldflags,
 )
+
+if host_machine.system() == 'wasip1'
+libgtk_dep = libgtk_static_dep
+endif
 
 subdir('compose')
