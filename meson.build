@@ -729,7 +729,7 @@ endif
 # to use a custom path for the Vulkan SDK. Bugs that are found with it should
 # be reported upstream and fixed.
 if host_machine.system() == 'wasip1'
-  have_vulkan = true
+  have_vulkan = false
   vulkan_pkg_found = false
   vulkan_dep = []
   glslc = find_program('glslc', required: vulkan_enabled)

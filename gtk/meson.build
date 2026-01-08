@@ -1353,4 +1353,6 @@ if host_machine.system() == 'wasip1'
 libgtk_dep = libgtk_static_dep
 endif
 
+if host_machine.system() != 'wasip1'
 subdir('compose')
+endif
