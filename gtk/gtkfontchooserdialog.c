@@ -208,13 +208,13 @@ setup_tweak_button (GtkFontChooserDialog *dialog)
 }
 
 static void
-gtk_font_chooser_dialog_map (GtkWidget *widget)
+gtk_font_chooser_dialog_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkFontChooserDialog *dialog = GTK_FONT_CHOOSER_DIALOG (widget);
 
   setup_tweak_button (dialog);
 
-  GTK_WIDGET_CLASS (gtk_font_chooser_dialog_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_font_chooser_dialog_parent_class)->map (widget, NULL);
 }
 
 static void

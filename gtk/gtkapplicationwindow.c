@@ -508,7 +508,7 @@ gtk_application_window_real_size_allocate (GtkWidget *widget,
 }
 
 static void
-gtk_application_window_real_realize (GtkWidget *widget)
+gtk_application_window_real_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkApplicationWindow *window = GTK_APPLICATION_WINDOW (widget);
   GtkSettings *settings;
@@ -518,7 +518,7 @@ gtk_application_window_real_realize (GtkWidget *widget)
   g_signal_connect (settings, "notify::gtk-shell-shows-menubar",
                     G_CALLBACK (gtk_application_window_shell_shows_menubar_changed), window);
 
-  GTK_WIDGET_CLASS (gtk_application_window_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_application_window_parent_class)->realize (widget, NULL);
 
   gtk_application_window_update_shell_shows_menubar (window, settings);
   gtk_application_window_update_menubar (window);
@@ -544,7 +544,7 @@ gtk_application_window_get_action_group (GtkApplicationWindow *window)
 }
 
 static void
-gtk_application_window_real_map (GtkWidget *widget)
+gtk_application_window_real_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkApplicationWindow *window = GTK_APPLICATION_WINDOW (widget);
   GtkApplicationWindowPrivate *priv = gtk_application_window_get_instance_private (window);
@@ -553,7 +553,7 @@ gtk_application_window_real_map (GtkWidget *widget)
   if (priv->menubar)
     gtk_widget_map (priv->menubar);
 
-  GTK_WIDGET_CLASS (gtk_application_window_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_application_window_parent_class)->map (widget, NULL);
 }
 
 static void
@@ -664,12 +664,12 @@ gtk_application_window_init (GtkApplicationWindow *window)
 }
 
 static void
-gtk_application_window_keys_changed (GtkWindow *window)
+gtk_application_window_keys_changed (GtkWindow *window, gpointer cb_data)
 {
   GtkApplicationWindow *self = GTK_APPLICATION_WINDOW (window);
   GtkApplicationWindowPrivate *priv = gtk_application_window_get_instance_private (self);
 
-  GTK_WINDOW_CLASS (gtk_application_window_parent_class)->keys_changed (window);
+  GTK_WINDOW_CLASS (gtk_application_window_parent_class)->keys_changed (window, NULL);
 
   /* Notify key changes on the help overlay */
   if (priv->help_overlay != NULL)

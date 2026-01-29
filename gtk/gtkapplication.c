@@ -376,7 +376,7 @@ gtk_application_identify_to_portal (GtkApplication *application)
 #endif
 
 static void
-gtk_application_startup (GApplication *g_application)
+gtk_application_startup (GApplication *g_application, gpointer cb_data)
 {
   GtkApplication *application = GTK_APPLICATION (g_application);
   GtkApplicationPrivate *priv = gtk_application_get_instance_private (application);
@@ -385,7 +385,7 @@ gtk_application_startup (GApplication *g_application)
 
   before = GDK_PROFILER_CURRENT_TIME;
 
-  G_APPLICATION_CLASS (gtk_application_parent_class)->startup (g_application);
+  G_APPLICATION_CLASS (gtk_application_parent_class)->startup (g_application, NULL);
 
   gtk_action_muxer_insert (priv->muxer, "app", G_ACTION_GROUP (application));
 
@@ -512,7 +512,8 @@ gtk_application_init (GtkApplication *application)
 
 static void
 gtk_application_window_added (GtkApplication *application,
-                              GtkWindow      *window)
+                              GtkWindow      *window,
+                              gpointer        cb_data)
 {
   GtkApplicationPrivate *priv = gtk_application_get_instance_private (application);
 
@@ -586,7 +587,8 @@ collect_window_state (GtkApplication *application,
 
 static void
 gtk_application_window_removed (GtkApplication *application,
-                                GtkWindow      *window)
+                                GtkWindow      *window,
+                                gpointer        cb_data)
 {
   GtkApplicationPrivate *priv = gtk_application_get_instance_private (application);
   gpointer old_active;

@@ -331,14 +331,14 @@ stack_visible_child_notify (GtkStack       *stack,
 }
 
 static void
-gtk_about_dialog_map (GtkWidget *widget)
+gtk_about_dialog_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkAboutDialog *about = GTK_ABOUT_DIALOG (widget);
 
   if (gtk_widget_get_visible (about->stack_switcher))
     gtk_widget_grab_focus (gtk_widget_get_first_child (about->stack_switcher));
 
-  GTK_WIDGET_CLASS (gtk_about_dialog_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_about_dialog_parent_class)->map (widget, NULL);
 }
 
 static void

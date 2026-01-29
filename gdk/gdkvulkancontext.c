@@ -653,9 +653,11 @@ physical_device_check_features (VkPhysicalDevice device)
       physical_device_supports_extension (device, VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME))
     features |= GDK_VULKAN_FEATURE_DMABUF;
 
+#ifndef __wasi__
   if (v12_features.timelineSemaphore ||
       physical_device_supports_extension (device, VK_KHR_TIMELINE_SEMAPHORE_EXTENSION_NAME))
     features |= GDK_VULKAN_FEATURE_TIMELINE_SEMAPHORE;
+#endif
 
 #ifdef GDK_WINDOWING_WIN32
   if (physical_device_supports_extension (device, VK_KHR_EXTERNAL_MEMORY_WIN32_EXTENSION_NAME))

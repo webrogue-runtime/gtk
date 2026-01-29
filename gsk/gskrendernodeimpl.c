@@ -415,8 +415,8 @@ gsk_linear_gradient_node_diff (GskRenderNode *node1,
 }
 
 static void
-gsk_linear_gradient_node_class_init (gpointer g_class,
-                                     gpointer class_data)
+gsk_linear_gradient_node_class_init (gpointer g_class
+                                         G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 
@@ -429,8 +429,8 @@ gsk_linear_gradient_node_class_init (gpointer g_class,
 }
 
 static void
-gsk_repeating_linear_gradient_node_class_init (gpointer g_class,
-                                               gpointer class_data)
+gsk_repeating_linear_gradient_node_class_init (gpointer g_class
+                                                   G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 
@@ -827,8 +827,8 @@ gsk_radial_gradient_node_diff (GskRenderNode *node1,
 }
 
 static void
-gsk_radial_gradient_node_class_init (gpointer g_class,
-                                     gpointer class_data)
+gsk_radial_gradient_node_class_init (gpointer g_class
+                                         G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 
@@ -841,8 +841,8 @@ gsk_radial_gradient_node_class_init (gpointer g_class,
 }
 
 static void
-gsk_repeating_radial_gradient_node_class_init (gpointer g_class,
-                                               gpointer class_data)
+gsk_repeating_radial_gradient_node_class_init (gpointer g_class
+                                                   G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 
@@ -1513,8 +1513,8 @@ gsk_conic_gradient_node_diff (GskRenderNode *node1,
 }
 
 static void
-gsk_conic_gradient_node_class_init (gpointer g_class,
-                                    gpointer class_data)
+gsk_conic_gradient_node_class_init (gpointer g_class
+                                        G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 
@@ -1905,8 +1905,8 @@ gsk_texture_node_replay (GskRenderNode   *node,
 }
 
 static void
-gsk_texture_node_class_init (gpointer g_class,
-                             gpointer class_data)
+gsk_texture_node_class_init (gpointer g_class
+                                 G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 
@@ -2117,8 +2117,8 @@ gsk_texture_scale_node_replay (GskRenderNode   *node,
 }
 
 static void
-gsk_texture_scale_node_class_init (gpointer g_class,
-                                   gpointer class_data)
+gsk_texture_scale_node_class_init (gpointer g_class
+                                       G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 
@@ -2638,8 +2638,8 @@ gsk_inset_shadow_node_diff (GskRenderNode *node1,
 }
 
 static void
-gsk_inset_shadow_node_class_init (gpointer g_class,
-                                  gpointer class_data)
+gsk_inset_shadow_node_class_init (gpointer g_class
+                                      G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 
@@ -3034,8 +3034,8 @@ gsk_outset_shadow_node_diff (GskRenderNode *node1,
 }
 
 static void
-gsk_outset_shadow_node_class_init (gpointer g_class,
-                                   gpointer class_data)
+gsk_outset_shadow_node_class_init (gpointer g_class
+                                       G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 
@@ -3471,8 +3471,8 @@ gsk_transform_node_render_opacity (GskRenderNode  *node,
 }
 
 static void
-gsk_transform_node_class_init (gpointer g_class,
-                               gpointer class_data)
+gsk_transform_node_class_init (gpointer g_class
+                                   G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 
@@ -3757,8 +3757,8 @@ gsk_shadow_node_replay (GskRenderNode   *node,
 }
 
 static void
-gsk_shadow_node_class_init (gpointer g_class,
-                            gpointer class_data)
+gsk_shadow_node_class_init (gpointer g_class
+                                G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 
@@ -4087,8 +4087,8 @@ gsk_text_node_replay (GskRenderNode   *node,
 }
 
 static void
-gsk_text_node_class_init (gpointer g_class,
-                          gpointer class_data)
+gsk_text_node_class_init (gpointer g_class
+                              G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 

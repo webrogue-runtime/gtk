@@ -289,10 +289,10 @@ typedef struct {
 } GdkEventTypeInfo;
 
 static void
-gdk_event_generic_class_init (gpointer g_class,
-                              gpointer class_data)
+gdk_event_generic_class_init (gpointer g_class
+                                  G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
-  GdkEventTypeInfo *info = class_data;
+  GdkEventTypeInfo *info = G_INIT_FUNC_GET_CLASS (class_data);
   GdkEventClass *event_class = g_class;
 
   /* Optional */

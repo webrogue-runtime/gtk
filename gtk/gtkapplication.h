@@ -59,9 +59,11 @@ struct _GtkApplicationClass
   /*< public >*/
 
   void (*window_added)   (GtkApplication *application,
-                          GtkWindow      *window);
+                          GtkWindow      *window,
+                          gpointer        cb_data);
   void (*window_removed) (GtkApplication *application,
-                          GtkWindow      *window);
+                          GtkWindow      *window,
+                          gpointer        cb_data);
 
   /**
    * GtkApplicationClass::save_state:

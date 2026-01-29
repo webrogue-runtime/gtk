@@ -57,6 +57,10 @@
 #include "wayland/gdkdisplay-wayland.h"
 #endif
 
+#ifdef GDK_WINDOWING_WEBROGUE
+#include "webrogue/gdkdisplay-webrogue.h"
+#endif
+
 /**
  * GdkDisplayManager:
  *
@@ -280,6 +284,9 @@ static GdkBackend gdk_backends[] = {
 #endif
 #ifdef GDK_WINDOWING_BROADWAY
   { "broadway", _gdk_broadway_display_open },
+#endif
+#ifdef GDK_WINDOWING_WEBROGUE
+  { "webrogue", _gdk_webrogue_display_open },
 #endif
   /* NULL-terminating this array so we can use commas above */
   { NULL, NULL }

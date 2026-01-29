@@ -191,7 +191,8 @@ enum {
 static GParamSpec *pages_properties[PAGES_N_PROPS] = { NULL, };
 
 static void     gtk_assistant_dispose            (GObject           *object);
-static void     gtk_assistant_map                (GtkWidget         *widget);
+static void     gtk_assistant_map                (GtkWidget         *widget,
+                                                  gpointer           cb_data);
 static void     gtk_assistant_unmap              (GtkWidget         *widget);
 static gboolean gtk_assistant_close_request      (GtkWindow         *window);
 
@@ -1396,7 +1397,7 @@ find_page (GtkAssistant  *assistant,
 }
 
 static void
-gtk_assistant_map (GtkWidget *widget)
+gtk_assistant_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkAssistant *assistant = GTK_ASSISTANT (widget);
   GList *page_node;
@@ -1427,7 +1428,7 @@ gtk_assistant_map (GtkWidget *widget)
   update_actions_size (assistant);
   update_title_state (assistant);
 
-  GTK_WIDGET_CLASS (gtk_assistant_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_assistant_parent_class)->map (widget, NULL);
 }
 
 static void

@@ -371,15 +371,18 @@ static void   gtk_text_get_property         (GObject      *object,
                                              GValue       *value,
                                              GParamSpec   *pspec);
 static void   gtk_text_notify               (GObject      *object,
-                                             GParamSpec   *pspec);
+                                             GParamSpec   *pspec,
+                                             gpointer      cb_data);
 static void   gtk_text_finalize             (GObject      *object);
 static void   gtk_text_dispose              (GObject      *object);
 
 /* GtkWidget methods
  */
-static void   gtk_text_realize              (GtkWidget        *widget);
+static void   gtk_text_realize              (GtkWidget        *widget,
+                                             gpointer          cb_data);
 static void   gtk_text_unrealize            (GtkWidget        *widget);
-static void   gtk_text_map                  (GtkWidget        *widget);
+static void   gtk_text_map                  (GtkWidget        *widget,
+                                             gpointer          cb_data);
 static void   gtk_text_unmap                (GtkWidget        *widget);
 static void   gtk_text_measure              (GtkWidget        *widget,
                                              GtkOrientation    orientation,
@@ -403,7 +406,8 @@ static void   gtk_text_css_changed          (GtkWidget        *widget,
 static void   gtk_text_direction_changed    (GtkWidget        *widget,
                                              GtkTextDirection  previous_dir);
 static void   gtk_text_state_flags_changed  (GtkWidget        *widget,
-                                             GtkStateFlags     previous_state);
+                                             GtkStateFlags     previous_state,
+                                             gpointer          cb_data);
 
 static gboolean gtk_text_drag_drop          (GtkDropTarget    *dest,
                                              const GValue     *value,
@@ -2009,13 +2013,14 @@ gtk_text_get_property (GObject    *object,
 
 static void
 gtk_text_notify (GObject    *object,
-                 GParamSpec *pspec)
+                 GParamSpec *pspec,
+                 gpointer    cb_data)
 {
   if (pspec->name == I_("has-focus"))
     gtk_text_check_cursor_blink (GTK_TEXT (object));
 
   if (G_OBJECT_CLASS (gtk_text_parent_class)->notify)
-    G_OBJECT_CLASS (gtk_text_parent_class)->notify (object, pspec);
+    G_OBJECT_CLASS (gtk_text_parent_class)->notify (object, pspec, cb_data);
 }
 
 static void
@@ -2363,11 +2368,11 @@ gtk_text_get_display_text (GtkText *self,
 }
 
 static void
-gtk_text_map (GtkWidget *widget)
+gtk_text_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkText *self = GTK_TEXT (widget);
 
-  GTK_WIDGET_CLASS (gtk_text_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_text_parent_class)->map (widget, NULL);
 
   gtk_text_recompute (self);
 }
@@ -2398,12 +2403,12 @@ gtk_text_im_set_focus_in (GtkText *self)
 }
 
 static void
-gtk_text_realize (GtkWidget *widget)
+gtk_text_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkText *self = GTK_TEXT (widget);
   GtkTextPrivate *priv = gtk_text_get_instance_private (self);
 
-  GTK_WIDGET_CLASS (gtk_text_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_text_parent_class)->realize (widget, NULL);
 
   gtk_im_context_set_client_widget (priv->im_context, widget);
   if (gtk_widget_is_focus (GTK_WIDGET (self)))
@@ -3542,7 +3547,8 @@ gtk_text_direction_changed (GtkWidget        *widget,
 
 static void
 gtk_text_state_flags_changed (GtkWidget     *widget,
-                              GtkStateFlags  previous_state)
+                              GtkStateFlags  previous_state,
+                              gpointer       cb_data)
 {
   GtkText *self = GTK_TEXT (widget);
   GtkTextPrivate *priv = gtk_text_get_instance_private (self);

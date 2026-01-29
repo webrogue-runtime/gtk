@@ -175,11 +175,11 @@ map_child (GtkWidget *child)
 }
 
 static void
-gtk_shortcuts_section_map (GtkWidget *widget)
+gtk_shortcuts_section_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkShortcutsSection *self = GTK_SHORTCUTS_SECTION (widget);
 
-  GTK_WIDGET_CLASS (gtk_shortcuts_section_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_shortcuts_section_parent_class)->map (widget, NULL);
 
   map_child (GTK_WIDGET (self->stack));
   map_child (GTK_WIDGET (self->footer));

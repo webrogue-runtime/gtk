@@ -563,11 +563,11 @@ gtk_inspector_misc_info_init (GtkInspectorMiscInfo *sl)
 }
 
 static void
-map (GtkWidget *widget)
+map (GtkWidget *widget, gpointer cb_data)
 {
   GtkInspectorMiscInfo *sl = GTK_INSPECTOR_MISC_INFO (widget);
 
-  GTK_WIDGET_CLASS (gtk_inspector_misc_info_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_inspector_misc_info_parent_class)->map (widget, NULL);
 
   sl->update_source_id = g_timeout_add_seconds (1, update_info, sl);
   update_info (sl);

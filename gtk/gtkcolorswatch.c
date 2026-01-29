@@ -394,14 +394,15 @@ update_accessible_properties (GtkColorSwatch *swatch)
 
 static void
 swatch_state_flags_changed (GtkWidget     *widget,
-                            GtkStateFlags  previous_state)
+                            GtkStateFlags  previous_state,
+                            gpointer       cb_data)
 {
   GtkColorSwatch *swatch = GTK_COLOR_SWATCH (widget);
 
   update_icon (swatch);
   update_accessible_properties (swatch);
 
-  GTK_WIDGET_CLASS (gtk_color_swatch_parent_class)->state_flags_changed (widget, previous_state);
+  GTK_WIDGET_CLASS (gtk_color_swatch_parent_class)->state_flags_changed (widget, previous_state, NULL);
 }
 
 /* GObject implementation {{{1 */

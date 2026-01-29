@@ -150,7 +150,8 @@ static void gtk_button_finish_activate (GtkButton         *button,
                                         gboolean           do_it);
 
 static void gtk_button_state_flags_changed (GtkWidget     *widget,
-                                            GtkStateFlags  previous_state);
+                                            GtkStateFlags  previous_state,
+                                            gpointer       cb_data);
 static void gtk_button_do_release      (GtkButton             *button,
                                         gboolean               emit_clicked);
 static void gtk_button_set_child_type (GtkButton *button, guint child_type);
@@ -985,7 +986,8 @@ gtk_button_get_use_underline (GtkButton *button)
 
 static void
 gtk_button_state_flags_changed (GtkWidget     *widget,
-                                GtkStateFlags  previous_state)
+                                GtkStateFlags  previous_state,
+                                gpointer       cb_data)
 {
   GtkButton *button = GTK_BUTTON (widget);
 

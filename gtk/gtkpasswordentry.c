@@ -235,12 +235,12 @@ gtk_password_entry_init (GtkPasswordEntry *entry)
 }
 
 static void
-gtk_password_entry_realize (GtkWidget *widget)
+gtk_password_entry_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkPasswordEntry *entry = GTK_PASSWORD_ENTRY (widget);
   GdkSeat *seat;
 
-  GTK_WIDGET_CLASS (gtk_password_entry_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_password_entry_parent_class)->realize (widget, NULL);
 
   seat = gdk_display_get_default_seat (gtk_widget_get_display (widget));
   if (seat)

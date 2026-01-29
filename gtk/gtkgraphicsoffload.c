@@ -190,11 +190,11 @@ sync_subsurface (GtkGraphicsOffload *self)
 }
 
 static void
-gtk_graphics_offload_realize (GtkWidget *widget)
+gtk_graphics_offload_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkGraphicsOffload *self = GTK_GRAPHICS_OFFLOAD (widget);
 
-  GTK_WIDGET_CLASS (gtk_graphics_offload_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_graphics_offload_parent_class)->realize (widget, NULL);
 
   sync_subsurface (self);
 }

@@ -712,6 +712,12 @@ if android_enabled
   ])
 endif
 
+if webrogue_enabled
+  gtk_sources += files([
+    'gtkapplication-webrogue.c',
+  ])
+endif
+
 if not (x11_enabled or win32_enabled)
   gtk_sources += ['gtkmountoperation-stub.c', ]
 endif
@@ -1139,6 +1145,7 @@ libgtk_static = static_library('gtk',
   include_directories: [confinc, gdkinc, gskinc, gtkinc],
   dependencies: gtk_deps + [libgtk_css_dep, libgdk_dep, libgsk_dep, media_deps, print_backend_deps],
   link_with: [libgtk_css, libgdk, libgsk ],
+  install: true,
 )
 
 if host_machine.system() != 'wasip1'
@@ -1333,14 +1340,12 @@ if build_gir
   gtk_dep_sources += gtk_gir
 endif
 
-if host_machine.system() != 'wasip1'
 libgtk_dep = declare_dependency(sources: gtk_dep_sources,
   include_directories: [confinc, gtkinc],
   dependencies: gtk_deps + [libgtk_css_dep, libgdk_dep, libgsk_dep],
   link_with: libgtk,
   link_args: common_ldflags,
 )
-endif
 
 libgtk_static_dep = declare_dependency(sources: gtk_dep_sources,
   include_directories: [confinc, gtkinc],
@@ -1348,10 +1353,6 @@ libgtk_static_dep = declare_dependency(sources: gtk_dep_sources,
   link_with: [libgtk_static, libgtk_css, libgdk, libgsk ],
   link_args: common_ldflags,
 )
-
-if host_machine.system() == 'wasip1'
-libgtk_dep = libgtk_static_dep
-endif
 
 if host_machine.system() != 'wasip1'
 subdir('compose')

@@ -383,11 +383,14 @@ struct _GtkWindowGeometryInfo
 static void gtk_window_constructed        (GObject           *object);
 static void gtk_window_dispose            (GObject           *object);
 static void gtk_window_finalize           (GObject           *object);
-static void gtk_window_show               (GtkWidget         *widget);
+static void gtk_window_show               (GtkWidget         *widget,
+                                           gpointer           cb_data);
 static void gtk_window_hide               (GtkWidget         *widget);
-static void gtk_window_map                (GtkWidget         *widget);
+static void gtk_window_map                (GtkWidget         *widget,
+                                           gpointer           cb_data);
 static void gtk_window_unmap              (GtkWidget         *widget);
-static void gtk_window_realize            (GtkWidget         *widget);
+static void gtk_window_realize            (GtkWidget         *widget,
+                                           gpointer           cb_data);
 static void gtk_window_unrealize          (GtkWidget         *widget);
 static void gtk_window_size_allocate      (GtkWidget         *widget,
                                            int                width,
@@ -429,7 +432,8 @@ static void gtk_window_move_focus         (GtkWidget         *widget,
 
 static void gtk_window_real_activate_default (GtkWindow         *window);
 static void gtk_window_real_activate_focus   (GtkWindow         *window);
-static void gtk_window_keys_changed          (GtkWindow         *window);
+static void gtk_window_keys_changed          (GtkWindow         *window,
+                                              gpointer           cb_data);
 static gboolean gtk_window_enable_debugging  (GtkWindow         *window,
                                               gboolean           toggle);
 static void gtk_window_unset_transient_for         (GtkWindow  *window);
@@ -4007,7 +4011,7 @@ gtk_window_should_use_csd (GtkWindow *window)
 }
 
 static void
-gtk_window_show (GtkWidget *widget)
+gtk_window_show (GtkWidget *widget, gpointer cb_data)
 {
   GtkWindow *window = GTK_WINDOW (widget);
   GtkWindowPrivate *priv = gtk_window_get_instance_private (window);
@@ -4109,13 +4113,13 @@ gtk_window_notify_startup (GtkWindow *window)
 }
 
 static void
-gtk_window_map (GtkWidget *widget)
+gtk_window_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkWindow *window = GTK_WINDOW (widget);
   GtkWindowPrivate *priv = gtk_window_get_instance_private (window);
   GtkWidget *child = priv->child;
 
-  GTK_WIDGET_CLASS (gtk_window_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_window_parent_class)->map (widget, NULL);
 
   if (child != NULL && gtk_widget_get_visible (child))
     gtk_widget_map (child);
@@ -4478,7 +4482,13 @@ toplevel_compute_size (GdkToplevel     *toplevel,
 }
 
 static void
-gtk_window_realize (GtkWidget *widget)
+surface_state_changed_callback (GtkWidget *widget, gpointer data, gpointer cb_data)
+{
+  surface_state_changed (widget);
+}
+
+static void
+gtk_window_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkWindow *window = GTK_WINDOW (widget);
   GtkWindowPrivate *priv = gtk_window_get_instance_private (window);
@@ -4519,7 +4529,7 @@ gtk_window_realize (GtkWidget *widget)
     priv->renderer = gsk_renderer_new_for_surface_full (surface, TRUE);
 
   g_signal_connect_swapped (surface, "notify::state", G_CALLBACK (surface_state_changed), widget);
-  g_signal_connect_swapped (surface, "notify::mapped", G_CALLBACK (surface_state_changed), widget);
+  g_signal_connect_swapped (surface, "notify::mapped", G_CALLBACK (surface_state_changed_callback), widget);
   g_signal_connect_swapped (surface, "notify::capabilities", G_CALLBACK (update_window_actions), widget);
   g_signal_connect (surface, "render", G_CALLBACK (surface_render), widget);
   g_signal_connect (surface, "event", G_CALLBACK (surface_event), widget);
@@ -4528,7 +4538,7 @@ gtk_window_realize (GtkWidget *widget)
   frame_clock = gdk_surface_get_frame_clock (surface);
   g_signal_connect (frame_clock, "after-paint", G_CALLBACK (after_paint), widget);
 
-  GTK_WIDGET_CLASS (gtk_window_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_window_parent_class)->realize (widget, NULL);
 
   gtk_root_start_layout (GTK_ROOT (window));
 
@@ -6134,7 +6144,7 @@ gtk_window_activate_menubar (GtkWidget *widget,
 }
 
 static void
-gtk_window_keys_changed (GtkWindow *window)
+gtk_window_keys_changed (GtkWindow *window, gpointer cb_data)
 {
 }
 

@@ -729,11 +729,13 @@ endif
 # to use a custom path for the Vulkan SDK. Bugs that are found with it should
 # be reported upstream and fixed.
 if host_machine.system() == 'wasip1'
-  have_vulkan = false
-  vulkan_pkg_found = false
-  vulkan_dep = []
+  # have_vulkan = true
+  # vulkan_pkg_found = false
+  # vulkan_dep = cc.find_library('vulkan',
+  #                       required: vulkan_enabled,
+  #                       dirs: join_paths(get_option('prefix'), 'lib')) 
   glslc = find_program('glslc', required: vulkan_enabled)
-else
+endif
 vulkan_dep = dependency('vulkan',
                         version: vulkan_req,
                         required: vulkan_enabled)
@@ -745,7 +747,6 @@ if vulkan_dep.found() and glslc.found()
 else
   have_vulkan = false
   vulkan_pkg_found = false
-endif
 endif
 
 libdrm_dep = dependency('libdrm', required: os_linux)

@@ -55,7 +55,8 @@ struct _GtkIMMulticontextPrivate
 };
 
 static void     gtk_im_multicontext_notify             (GObject                 *object,
-                                                        GParamSpec              *pspec);
+                                                        GParamSpec              *pspec,
+                                                        gpointer                 cb_data);
 static void     gtk_im_multicontext_finalize           (GObject                 *object);
 
 static void     gtk_im_multicontext_set_delegate       (GtkIMMulticontext       *multicontext,
@@ -651,7 +652,8 @@ propagate_purpose (GtkIMMulticontext *context)
 
 static void
 gtk_im_multicontext_notify (GObject      *object,
-                            GParamSpec   *pspec)
+                            GParamSpec   *pspec,
+                            gpointer      cb_data)
 {
   propagate_purpose (GTK_IM_MULTICONTEXT (object));
 }

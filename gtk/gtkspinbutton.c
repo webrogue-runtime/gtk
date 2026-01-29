@@ -287,9 +287,11 @@ static void gtk_spin_button_get_property   (GObject         *object,
                                             guint            prop_id,
                                             GValue          *value,
                                             GParamSpec      *pspec);
-static void gtk_spin_button_realize        (GtkWidget          *widget);
+static void gtk_spin_button_realize        (GtkWidget          *widget,
+                                            gpointer            cb_data);
 static void gtk_spin_button_state_flags_changed  (GtkWidget     *widget,
-                                                  GtkStateFlags  previous_state);
+                                                 GtkStateFlags  previous_state,
+                                                 gpointer       cb_data);
 static gboolean gtk_spin_button_timer          (GtkSpinButton      *spin_button);
 static gboolean gtk_spin_button_stop_spinning  (GtkSpinButton      *spin);
 static void gtk_spin_button_value_changed  (GtkAdjustment      *adjustment,
@@ -1184,13 +1186,13 @@ gtk_spin_button_dispose (GObject *object)
 }
 
 static void
-gtk_spin_button_realize (GtkWidget *widget)
+gtk_spin_button_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkSpinButton *spin_button = GTK_SPIN_BUTTON (widget);
   gboolean return_val;
   const char *text;
 
-  GTK_WIDGET_CLASS (gtk_spin_button_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_spin_button_parent_class)->realize (widget, NULL);
 
   return_val = FALSE;
   g_signal_emit (spin_button, spinbutton_signals[OUTPUT], 0, &return_val);
@@ -1354,14 +1356,15 @@ gtk_spin_button_update_width_chars (GtkSpinButton *spin_button)
 
 static void
 gtk_spin_button_state_flags_changed (GtkWidget     *widget,
-                                     GtkStateFlags  previous_state)
+                                     GtkStateFlags  previous_state,
+                                     gpointer       cb_data)
 {
   GtkSpinButton *spin = GTK_SPIN_BUTTON (widget);
 
   if (!gtk_widget_is_sensitive (widget))
     gtk_spin_button_stop_spinning (spin);
 
-  GTK_WIDGET_CLASS (gtk_spin_button_parent_class)->state_flags_changed (widget, previous_state);
+  GTK_WIDGET_CLASS (gtk_spin_button_parent_class)->state_flags_changed (widget, previous_state, NULL);
 }
 
 static int

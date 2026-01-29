@@ -136,7 +136,8 @@ size_group_row_finalize (GObject *object)
 
 static void
 size_group_state_flags_changed (GtkWidget     *widget,
-                                GtkStateFlags  old_state)
+                                GtkStateFlags  old_state,
+                                gpointer       cb_data)
 {
   SizeGroupRow *row = (SizeGroupRow*)widget;
   GtkStateFlags state;

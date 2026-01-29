@@ -405,7 +405,8 @@ static void     gtk_file_chooser_widget_get_property (GObject               *obj
                                                        GValue                *value,
                                                        GParamSpec            *pspec);
 static void     gtk_file_chooser_widget_dispose      (GObject               *object);
-static void     gtk_file_chooser_widget_map            (GtkWidget             *widget);
+static void     gtk_file_chooser_widget_map            (GtkWidget             *widget, 
+                                                        gpointer               cb_data);
 static void     gtk_file_chooser_widget_unmap          (GtkWidget             *widget);
 static void     gtk_file_chooser_widget_root           (GtkWidget             *widget);
 static void     gtk_file_chooser_widget_unroot         (GtkWidget             *widget);
@@ -3394,13 +3395,13 @@ add_cwd_to_sidebar_if_needed (GtkFileChooserWidget *impl)
 
 /* GtkWidget::map method */
 static void
-gtk_file_chooser_widget_map (GtkWidget *widget)
+gtk_file_chooser_widget_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkFileChooserWidget *impl = GTK_FILE_CHOOSER_WIDGET (widget);
 
   impl->browse_files_interaction_frozen = FALSE;
 
-  GTK_WIDGET_CLASS (gtk_file_chooser_widget_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_file_chooser_widget_parent_class)->map (widget, NULL);
 
   settings_load (impl);
 

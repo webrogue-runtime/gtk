@@ -604,6 +604,6 @@ struct _GtkConstraintTargetInterface
 G_DEFINE_INTERFACE (GtkConstraintTarget, gtk_constraint_target, G_TYPE_OBJECT)
 
 static void
-gtk_constraint_target_default_init (GtkConstraintTargetInterface *iface)
+gtk_constraint_target_default_init (GtkConstraintTargetInterface *iface G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
 }

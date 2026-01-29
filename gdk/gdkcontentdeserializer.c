@@ -864,7 +864,7 @@ color_deserializer_finish (GObject      *source,
     }
   else if (written == 0)
     {
-      GdkRGBA black = GDK_RGBA ("000");
+      GdkRGBA black = GDK_RGBA ("000000FF");
 
       /* Never return NULL, we only return that on error */
       g_value_set_boxed (gdk_content_deserializer_get_value (deserializer), &black);

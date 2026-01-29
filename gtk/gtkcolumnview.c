@@ -534,11 +534,11 @@ gtk_column_view_unroot (GtkWidget *widget)
 }
 
 static void
-gtk_column_view_show (GtkWidget *widget)
+gtk_column_view_show (GtkWidget *widget, gpointer cb_data)
 {
   GtkColumnView *self = GTK_COLUMN_VIEW (widget);
 
-  GTK_WIDGET_CLASS (gtk_column_view_parent_class)->show (widget);
+  GTK_WIDGET_CLASS (gtk_column_view_parent_class)->show (widget, NULL);
 
   if (!gtk_column_view_is_inert (self))
     gtk_column_view_update_cell_factories (self, FALSE);

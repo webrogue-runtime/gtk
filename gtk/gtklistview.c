@@ -706,11 +706,11 @@ gtk_list_view_unroot (GtkWidget *widget)
 }
 
 static void
-gtk_list_view_show (GtkWidget *widget)
+gtk_list_view_show (GtkWidget *widget, gpointer cb_data)
 {
   GtkListView *self = GTK_LIST_VIEW (widget);
 
-  GTK_WIDGET_CLASS (gtk_list_view_parent_class)->show (widget);
+  GTK_WIDGET_CLASS (gtk_list_view_parent_class)->show (widget, NULL);
 
   if (!gtk_list_view_is_inert (self))
     gtk_list_view_update_factories (self);

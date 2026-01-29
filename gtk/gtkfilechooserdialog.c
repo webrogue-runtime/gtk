@@ -255,10 +255,13 @@ static void     gtk_file_chooser_dialog_get_property (GObject               *obj
                                                       GValue                *value,
                                                       GParamSpec            *pspec);
 static void     gtk_file_chooser_dialog_notify       (GObject               *object,
-                                                      GParamSpec            *pspec);
+                                                      GParamSpec            *pspec,
+                                                      gpointer               cb_data);
 
-static void     gtk_file_chooser_dialog_realize      (GtkWidget             *widget);
-static void     gtk_file_chooser_dialog_map          (GtkWidget             *widget);
+static void     gtk_file_chooser_dialog_realize      (GtkWidget             *widget,
+                                                      gpointer               cb_data);
+static void     gtk_file_chooser_dialog_map          (GtkWidget             *widget,
+                                                      gpointer               cb_data);
 static void     gtk_file_chooser_dialog_unmap        (GtkWidget             *widget);
 static void     gtk_file_chooser_dialog_size_allocate (GtkWidget            *widget,
                                                        int                   width,
@@ -419,13 +422,14 @@ gtk_file_chooser_dialog_get_property (GObject    *object,
 
 static void
 gtk_file_chooser_dialog_notify (GObject    *object,
-                                GParamSpec *pspec)
+                                GParamSpec *pspec,
+                                gpointer   cb_data)
 {
   if (strcmp (pspec->name, "action") == 0)
     setup_save_entry (GTK_FILE_CHOOSER_DIALOG (object));
 
   if (G_OBJECT_CLASS (gtk_file_chooser_dialog_parent_class)->notify)
-    G_OBJECT_CLASS (gtk_file_chooser_dialog_parent_class)->notify (object, pspec);
+    G_OBJECT_CLASS (gtk_file_chooser_dialog_parent_class)->notify (object, pspec, NULL);
 }
 
 static void
@@ -590,7 +594,7 @@ ensure_default_response (GtkFileChooserDialog *dialog)
 }
 
 static void
-gtk_file_chooser_dialog_realize (GtkWidget *widget)
+gtk_file_chooser_dialog_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkFileChooserDialog *dialog = GTK_FILE_CHOOSER_DIALOG (widget);
   GSettings *settings;
@@ -602,11 +606,11 @@ gtk_file_chooser_dialog_realize (GtkWidget *widget)
   if (width != 0 && height != 0)
     gtk_window_set_default_size (GTK_WINDOW (dialog), width, height);
 
-  GTK_WIDGET_CLASS (gtk_file_chooser_dialog_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_file_chooser_dialog_parent_class)->realize (widget, NULL);
 }
 
 static void
-gtk_file_chooser_dialog_map (GtkWidget *widget)
+gtk_file_chooser_dialog_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkFileChooserDialog *dialog = GTK_FILE_CHOOSER_DIALOG (widget);
   GtkFileChooserDialogPrivate *priv = gtk_file_chooser_dialog_get_instance_private (dialog);
@@ -617,7 +621,7 @@ gtk_file_chooser_dialog_map (GtkWidget *widget)
 
   gtk_file_chooser_widget_initial_focus (GTK_FILE_CHOOSER_WIDGET (priv->widget));
 
-  GTK_WIDGET_CLASS (gtk_file_chooser_dialog_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_file_chooser_dialog_parent_class)->map (widget, NULL);
 }
 
 static void

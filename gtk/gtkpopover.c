@@ -1051,7 +1051,7 @@ gtk_popover_init (GtkPopover *popover)
 }
 
 static void
-gtk_popover_realize (GtkWidget *widget)
+gtk_popover_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkPopover *popover = GTK_POPOVER (widget);
   GtkPopoverPrivate *priv = gtk_popover_get_instance_private (popover);
@@ -1068,7 +1068,7 @@ gtk_popover_realize (GtkWidget *widget)
   g_signal_connect (priv->surface, "render", G_CALLBACK (surface_render), widget);
   g_signal_connect (priv->surface, "event", G_CALLBACK (surface_event), widget);
 
-  GTK_WIDGET_CLASS (gtk_popover_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_popover_parent_class)->realize (widget, NULL);
 
   priv->renderer = gsk_renderer_new_for_surface_full (priv->surface, TRUE);
 
@@ -1149,7 +1149,7 @@ gtk_popover_focus (GtkWidget        *widget,
 }
 
 static void
-gtk_popover_show (GtkWidget *widget)
+gtk_popover_show (GtkWidget *widget, gpointer cb_data)
 {
   GtkPopover *popover = GTK_POPOVER (widget);
   GtkPopoverPrivate *priv = gtk_popover_get_instance_private (popover);
@@ -1201,7 +1201,7 @@ surface_transform_changed_cb (GtkWidget               *widget,
 }
 
 static void
-gtk_popover_map (GtkWidget *widget)
+gtk_popover_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkPopover *popover = GTK_POPOVER (widget);
   GtkPopoverPrivate *priv = gtk_popover_get_instance_private (popover);
@@ -1216,7 +1216,7 @@ gtk_popover_map (GtkWidget *widget)
                                                        popover,
                                                        unset_surface_transform_changed_cb);
 
-  GTK_WIDGET_CLASS (gtk_popover_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_popover_parent_class)->map (widget, NULL);
 
   if (priv->autohide)
     gtk_grab_add (widget);

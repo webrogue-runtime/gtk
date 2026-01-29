@@ -813,7 +813,8 @@ gtk_label_update_cursor (GtkLabel *self)
 
 static void
 gtk_label_state_flags_changed (GtkWidget     *widget,
-                               GtkStateFlags  prev_state)
+                               GtkStateFlags  prev_state,
+                               gpointer       cb_data)
 {
   GtkLabel *self = GTK_LABEL (widget);
 
@@ -838,7 +839,7 @@ gtk_label_state_flags_changed (GtkWidget     *widget,
     }
 
   if (GTK_WIDGET_CLASS (gtk_label_parent_class)->state_flags_changed)
-    GTK_WIDGET_CLASS (gtk_label_parent_class)->state_flags_changed (widget, prev_state);
+    GTK_WIDGET_CLASS (gtk_label_parent_class)->state_flags_changed (widget, prev_state, NULL);
 }
 
 static void

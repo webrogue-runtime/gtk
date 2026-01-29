@@ -335,6 +335,14 @@ parse_image (GtkCssParser *parser,
   return FALSE;
 }
 
+static gboolean
+adapted_gtk_css_number_value_can_parse (GtkCssParser *parser,
+                                        gpointer      option_data,
+                                        gpointer      user_data)
+{
+  return gtk_css_number_value_can_parse (parser);
+}
+
 static guint
 gtk_css_image_cross_fade_parse_arg (GtkCssParser *parser,
                                     guint         arg,
@@ -345,7 +353,7 @@ gtk_css_image_cross_fade_parse_arg (GtkCssParser *parser,
   GtkCssImage *image = NULL;
   GtkCssParseOption options[] =
     {
-      { (void *)gtk_css_number_value_can_parse, parse_progress, &progress },
+      { (void *)adapted_gtk_css_number_value_can_parse, parse_progress, &progress },
       { NULL, parse_image, &image },
     };
 

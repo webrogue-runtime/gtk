@@ -281,7 +281,8 @@ gtk_menu_button_get_property (GObject    *object,
 
 static void
 gtk_menu_button_notify (GObject    *object,
-                        GParamSpec *pspec)
+                        GParamSpec *pspec,
+                        gpointer    cb_data)
 {
   if (strcmp (pspec->name, "focus-on-click") == 0)
     {
@@ -292,12 +293,13 @@ gtk_menu_button_notify (GObject    *object,
     }
 
   if (G_OBJECT_CLASS (gtk_menu_button_parent_class)->notify)
-    G_OBJECT_CLASS (gtk_menu_button_parent_class)->notify (object, pspec);
+    G_OBJECT_CLASS (gtk_menu_button_parent_class)->notify (object, pspec, NULL);
 }
 
 static void
 gtk_menu_button_state_flags_changed (GtkWidget    *widget,
-                                     GtkStateFlags previous_state_flags)
+                                     GtkStateFlags previous_state_flags,
+                                     gpointer      cb_data)
 {
   GtkMenuButton *self = GTK_MENU_BUTTON (widget);
 

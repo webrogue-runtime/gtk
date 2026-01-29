@@ -460,11 +460,12 @@ gtk_model_button_update_state (GtkModelButton *self)
 
 static void
 gtk_model_button_state_flags_changed (GtkWidget     *widget,
-                                      GtkStateFlags  previous_flags)
+                                      GtkStateFlags  previous_flags,
+                                      gpointer       cb_data)
 {
   gtk_model_button_update_state (GTK_MODEL_BUTTON (widget));
 
-  GTK_WIDGET_CLASS (gtk_model_button_parent_class)->state_flags_changed (widget, previous_flags);
+  GTK_WIDGET_CLASS (gtk_model_button_parent_class)->state_flags_changed (widget, previous_flags, NULL);
 }
 
 static void

@@ -533,7 +533,7 @@ gettext_initialization (void)
 }
 
 static void
-default_display_notify_cb (GdkDisplayManager *dm)
+default_display_notify_cb (GdkDisplayManager *dm, gpointer data, gpointer cb_data)
 {
   debug_flags[0].display = gdk_display_get_default ();
 }
@@ -588,7 +588,7 @@ do_post_parse_initialization (void)
   before = GDK_PROFILER_CURRENT_TIME;
   display_manager = gdk_display_manager_get ();
   if (gdk_display_manager_get_default_display (display_manager) != NULL)
-    default_display_notify_cb (display_manager);
+    default_display_notify_cb (display_manager, NULL, NULL);
   gdk_profiler_end_mark (before, "Create display", NULL);
 
   g_signal_connect (display_manager, "notify::default-display",

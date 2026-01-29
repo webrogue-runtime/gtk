@@ -756,11 +756,11 @@ gtk_shortcuts_window_unmap (GtkWidget *widget)
 }
 
 static void
-gtk_shortcuts_window_keys_changed (GtkWindow *window)
+gtk_shortcuts_window_keys_changed (GtkWindow *window, gpointer cb_data)
 {
   GtkShortcutsWindow *self = GTK_SHORTCUTS_WINDOW (window);
 
-  GTK_WINDOW_CLASS (gtk_shortcuts_window_parent_class)->keys_changed (window);
+  GTK_WINDOW_CLASS (gtk_shortcuts_window_parent_class)->keys_changed (window, NULL);
 
   if (self->window != NULL)
     update_accels_for_actions (self);

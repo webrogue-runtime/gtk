@@ -1,5 +1,5 @@
 /* GDK - The GIMP Drawing Kit
- * Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
+ * Copyright (C) 2026 Artem Borovik
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -15,27 +15,8 @@
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- * Modified by the GTK+ Team and others 1997-2000.  See the AUTHORS
- * file for a list of people on the GTK+ Team.  See the ChangeLog
- * files for a list of changes.  These files are distributed with
- * GTK+ at ftp://ftp.gtk.org/pub/gtk/.
- */
-
 #pragma once
 
 #include <gdk/gdk.h>
 
-#define __GDKWAYLAND_H_INSIDE__
-
-#include <gdk/wayland/gdkwaylanddevice.h>
-#include <gdk/wayland/gdkwaylanddisplay.h>
-#include <gdk/wayland/gdkwaylandglcontext.h>
-#include <gdk/wayland/gdkwaylandmonitor.h>
-#include <gdk/wayland/gdkwaylandpopup.h>
-#include <gdk/wayland/gdkwaylandseat.h>
-#include <gdk/wayland/gdkwaylandsurface.h>
-#include <gdk/wayland/gdkwaylandtoplevel.h>
-
-#undef __GDKWAYLAND_H_INSIDE__
-
+#include "gdkdisplay-webrogue.h"

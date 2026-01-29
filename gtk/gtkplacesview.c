@@ -2197,13 +2197,13 @@ gtk_places_view_constructed (GObject *object)
 }
 
 static void
-gtk_places_view_map (GtkWidget *widget)
+gtk_places_view_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkPlacesView *view = GTK_PLACES_VIEW (widget);
 
   gtk_editable_set_text (GTK_EDITABLE (view->address_entry), "");
 
-  GTK_WIDGET_CLASS (gtk_places_view_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_places_view_parent_class)->map (widget, NULL);
 }
 
 static void

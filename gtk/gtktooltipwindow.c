@@ -204,7 +204,7 @@ surface_event (GdkSurface *surface,
 }
 
 static void
-gtk_tooltip_window_realize (GtkWidget *widget)
+gtk_tooltip_window_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkTooltipWindow *window = GTK_TOOLTIP_WINDOW (widget);
   GdkSurface *parent;
@@ -218,7 +218,7 @@ gtk_tooltip_window_realize (GtkWidget *widget)
   g_signal_connect (window->surface, "render", G_CALLBACK (surface_render), widget);
   g_signal_connect (window->surface, "event", G_CALLBACK (surface_event), widget);
 
-  GTK_WIDGET_CLASS (gtk_tooltip_window_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_tooltip_window_parent_class)->realize (widget, NULL);
 
   window->renderer = gsk_renderer_new_for_surface_full (window->surface, TRUE);
 
@@ -265,9 +265,8 @@ surface_transform_changed_cb (GtkWidget               *widget,
   return G_SOURCE_CONTINUE;
 }
 
-
 static void
-gtk_tooltip_window_map (GtkWidget *widget)
+gtk_tooltip_window_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkTooltipWindow *window = GTK_TOOLTIP_WINDOW (widget);
   GdkPopupLayout *layout;
@@ -285,7 +284,7 @@ gtk_tooltip_window_map (GtkWidget *widget)
                                                        window,
                                                        unset_surface_transform_changed_cb);
 
-  GTK_WIDGET_CLASS (gtk_tooltip_window_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_tooltip_window_parent_class)->map (widget, NULL);
 
   if (gtk_widget_get_visible (window->box))
     gtk_widget_map (window->box);
@@ -307,7 +306,7 @@ gtk_tooltip_window_unmap (GtkWidget *widget)
 }
 
 static void
-gtk_tooltip_window_show (GtkWidget *widget)
+gtk_tooltip_window_show (GtkWidget *widget, gpointer cb_data)
 {
   _gtk_widget_set_visible_flag (widget, TRUE);
   gtk_widget_realize (widget);

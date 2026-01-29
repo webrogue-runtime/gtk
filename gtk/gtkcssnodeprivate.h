@@ -76,7 +76,8 @@ struct _GtkCssNodeClass
                                                          GtkCssNode            *child,
                                                          GtkCssNode            *previous);
   void                  (* style_changed)               (GtkCssNode            *cssnode,
-                                                         GtkCssStyleChange     *style_change);
+                                                         GtkCssStyleChange     *style_change,
+                                                         gpointer               cb_data);
 
   /* get style provider to use or NULL to use parent's */
   GtkStyleProvider *    (* get_style_provider)          (GtkCssNode            *cssnode);

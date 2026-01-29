@@ -204,7 +204,8 @@ static void      gtk_dialog_add_buttons_valist   (GtkDialog    *dialog,
                                                   va_list       args);
 
 static gboolean  gtk_dialog_close_request        (GtkWindow    *window);
-static void      gtk_dialog_map                  (GtkWidget    *widget);
+static void      gtk_dialog_map                  (GtkWidget    *widget,
+                                                  gpointer cb_data);
 
 static void      gtk_dialog_close                (GtkDialog    *dialog);
 
@@ -635,7 +636,7 @@ gtk_dialog_close_request (GtkWindow *window)
  * right initial focus widget.
  */
 static void
-gtk_dialog_map (GtkWidget *widget)
+gtk_dialog_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkWidget *default_widget, *focus;
   GtkWindow *window = GTK_WINDOW (widget);
@@ -646,7 +647,7 @@ gtk_dialog_map (GtkWidget *widget)
   if (gtk_window_get_transient_for (window) == NULL)
     g_message ("GtkDialog mapped without a transient parent. This is discouraged.");
 
-  GTK_WIDGET_CLASS (gtk_dialog_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_dialog_parent_class)->map (widget, NULL);
 
   focus = gtk_window_get_focus (window);
   if (!focus)

@@ -571,18 +571,21 @@ typedef struct
 static void     gtk_widget_base_class_init                      (gpointer            g_class);
 static void     gtk_widget_class_init                           (GtkWidgetClass     *klass);
 static void     gtk_widget_base_class_finalize                  (GtkWidgetClass     *klass);
-static void     gtk_widget_init                                 (GTypeInstance      *instance,
-                                                                 gpointer            g_class);
+static void gtk_widget_init (GTypeInstance *instance
+                                 G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data));
 static void     gtk_widget_dispose                              (GObject            *object);
 static void     gtk_widget_finalize                             (GObject            *object);
 static void     gtk_widget_real_destroy                         (GtkWidget          *object);
 static gboolean gtk_widget_real_focus                           (GtkWidget          *widget,
                                                                  GtkDirectionType    direction);
-static void     gtk_widget_real_show                            (GtkWidget          *widget);
+static void     gtk_widget_real_show                            (GtkWidget          *widget,
+                                                                 gpointer            cb_data);
 static void     gtk_widget_real_hide                            (GtkWidget          *widget);
-static void     gtk_widget_real_map                             (GtkWidget          *widget);
+static void     gtk_widget_real_map                             (GtkWidget          *widget,
+                                                                 gpointer            cb_data);
 static void     gtk_widget_real_unmap                           (GtkWidget          *widget);
-static void     gtk_widget_real_realize                         (GtkWidget          *widget);
+static void     gtk_widget_real_realize                         (GtkWidget          *widget, 
+                                                                 gpointer            cb_data);
 static void     gtk_widget_real_unrealize                       (GtkWidget          *widget);
 static void     gtk_widget_real_direction_changed               (GtkWidget          *widget,
                                                                  GtkTextDirection    previous_direction);
@@ -781,12 +784,19 @@ gtk_widget_real_contains (GtkWidget *widget,
 }
 
 static void
+gtk_widget_root_callback (GtkWidget *widget,
+                          gpointer cb_data)
+{
+  gtk_widget_root (widget);
+}
+
+static void
 gtk_widget_real_root (GtkWidget *widget)
 {
   GtkWidgetPrivate *priv = gtk_widget_get_instance_private (widget);
   GList *l;
 
-  gtk_widget_forall (widget, (GtkCallback) gtk_widget_root, NULL);
+  gtk_widget_forall (widget, gtk_widget_root_callback, NULL);
 
   for (l = priv->event_controllers; l; l = l->next)
     {
@@ -846,7 +856,8 @@ gtk_widget_real_get_request_mode (GtkWidget *widget)
 
 static void
 gtk_widget_real_state_flags_changed (GtkWidget     *widget,
-                                     GtkStateFlags  old_state)
+                                     GtkStateFlags  old_state,
+                                     gpointer       cb_data)
 {
 }
 
@@ -2329,8 +2340,9 @@ gtk_widget_class_get_visible_by_default (GtkWidgetClass *widget_class)
 }
 
 static void
-gtk_widget_init (GTypeInstance *instance, gpointer g_class)
+gtk_widget_init (GTypeInstance *instance G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
+  gpointer g_class = G_INIT_FUNC_GET_CLASS (class_data);
   GtkWidget *widget = GTK_WIDGET (instance);
   GtkWidgetPrivate *priv = gtk_widget_get_instance_private (widget);
   GType layout_manager_type;
@@ -2761,7 +2773,7 @@ gtk_widget_show (GtkWidget *widget)
 }
 
 static void
-gtk_widget_real_show (GtkWidget *widget)
+gtk_widget_real_show (GtkWidget *widget, gpointer cb_data)
 {
   GtkWidgetPrivate *priv = gtk_widget_get_instance_private (widget);
 
@@ -7825,7 +7837,7 @@ gtk_widget_finalize (GObject *object)
 }
 
 static void
-gtk_widget_real_map (GtkWidget *widget)
+gtk_widget_real_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkWidgetPrivate *priv = gtk_widget_get_instance_private (widget);
 
@@ -7874,7 +7886,7 @@ gtk_widget_real_unmap (GtkWidget *widget)
 }
 
 static void
-gtk_widget_real_realize (GtkWidget *widget)
+gtk_widget_real_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkWidgetPrivate *priv = gtk_widget_get_instance_private (widget);
 

@@ -1065,12 +1065,12 @@ gtk_emoji_chooser_init (GtkEmojiChooser *chooser)
 }
 
 static void
-gtk_emoji_chooser_show (GtkWidget *widget)
+gtk_emoji_chooser_show (GtkWidget *widget, gpointer cb_data)
 {
   GtkEmojiChooser *chooser = GTK_EMOJI_CHOOSER (widget);
   GtkAdjustment *adj;
 
-  GTK_WIDGET_CLASS (gtk_emoji_chooser_parent_class)->show (widget);
+  GTK_WIDGET_CLASS (gtk_emoji_chooser_parent_class)->show (widget, NULL);
 
   adj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (chooser->scrolled_window));
   gtk_adjustment_set_value (adj, 0);
@@ -1293,11 +1293,11 @@ keynav_failed (GtkWidget        *box,
 }
 
 static void
-gtk_emoji_chooser_map (GtkWidget *widget)
+gtk_emoji_chooser_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkEmojiChooser *chooser = GTK_EMOJI_CHOOSER (widget);
 
-  GTK_WIDGET_CLASS (gtk_emoji_chooser_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_emoji_chooser_parent_class)->map (widget, NULL);
 
   gtk_widget_grab_focus (chooser->search_entry);
 }

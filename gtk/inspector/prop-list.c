@@ -257,9 +257,9 @@ update_key_capture (GtkInspectorPropList *pl)
 }
 
 static void
-map (GtkWidget *widget)
+map (GtkWidget *widget, gpointer cb_data)
 {
-  GTK_WIDGET_CLASS (gtk_inspector_prop_list_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_inspector_prop_list_parent_class)->map (widget, NULL);
 
   update_key_capture (GTK_INSPECTOR_PROP_LIST (widget));
 }

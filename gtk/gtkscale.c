@@ -288,7 +288,8 @@ update_label_request (GtkScale *scale)
 
 static void
 gtk_scale_notify (GObject    *object,
-                  GParamSpec *pspec)
+                  GParamSpec *pspec,
+                  gpointer    cb_data)
 {
   GtkScale *scale = GTK_SCALE (object);
   GtkScalePrivate *priv = gtk_scale_get_instance_private (scale);
@@ -329,7 +330,7 @@ gtk_scale_notify (GObject    *object,
     }
 
   if (G_OBJECT_CLASS (gtk_scale_parent_class)->notify)
-    G_OBJECT_CLASS (gtk_scale_parent_class)->notify (object, pspec);
+    G_OBJECT_CLASS (gtk_scale_parent_class)->notify (object, pspec, NULL);
 }
 
 static void

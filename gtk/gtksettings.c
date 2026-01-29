@@ -226,7 +226,8 @@ static void     gtk_settings_set_property        (GObject               *object,
                                                   const GValue          *value,
                                                   GParamSpec            *pspec);
 static void     gtk_settings_notify              (GObject               *object,
-                                                  GParamSpec            *pspec);
+                                                  GParamSpec            *pspec,
+                                                  gpointer               cb_data);
 static void    settings_update_double_click      (GtkSettings           *settings);
 
 static void    settings_update_cursor_theme      (GtkSettings           *settings);
@@ -1328,7 +1329,8 @@ settings_update_font_values (GtkSettings *settings)
 
 static void
 gtk_settings_notify (GObject    *object,
-                     GParamSpec *pspec)
+                     GParamSpec *pspec,
+                     gpointer    cb_data)
 {
   GtkSettings *settings = GTK_SETTINGS (object);
   guint property_id = pspec->param_id;

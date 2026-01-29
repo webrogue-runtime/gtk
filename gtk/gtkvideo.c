@@ -198,11 +198,11 @@ overlay_clicked_cb (GtkGestureClick *gesture,
 }
 
 static void
-gtk_video_realize (GtkWidget *widget)
+gtk_video_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkVideo *self = GTK_VIDEO (widget);
 
-  GTK_WIDGET_CLASS (gtk_video_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_video_parent_class)->realize (widget, NULL);
 
   if (self->media_stream)
     {
@@ -236,11 +236,11 @@ gtk_video_unrealize (GtkWidget *widget)
 }
 
 static void
-gtk_video_map (GtkWidget *widget)
+gtk_video_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkVideo *self = GTK_VIDEO (widget);
 
-  GTK_WIDGET_CLASS (gtk_video_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_video_parent_class)->map (widget, NULL);
 
   if (self->autoplay &&
       self->media_stream &&

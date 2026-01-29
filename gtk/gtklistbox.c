@@ -275,7 +275,8 @@ static void                 gtk_list_box_add_move_binding             (GtkWidget
 static void                 gtk_list_box_update_cursor                (GtkListBox          *box,
                                                                        GtkListBoxRow       *row,
                                                                        gboolean             grab_focus);
-static void                 gtk_list_box_show                         (GtkWidget           *widget);
+static void                 gtk_list_box_show                         (GtkWidget           *widget,
+                                                                       gpointer             cb_data);
 static gboolean             gtk_list_box_focus                        (GtkWidget           *widget,
                                                                        GtkDirectionType     direction);
 static GSequenceIter*       gtk_list_box_get_previous_visible         (GtkListBox          *box,
@@ -2026,11 +2027,11 @@ gtk_list_box_click_gesture_stopped (GtkGestureClick *gesture,
 }
 
 static void
-gtk_list_box_show (GtkWidget *widget)
+gtk_list_box_show (GtkWidget *widget, gpointer cb_data)
 {
   gtk_list_box_do_reseparate (GTK_LIST_BOX (widget));
 
-  GTK_WIDGET_CLASS (gtk_list_box_parent_class)->show (widget);
+  GTK_WIDGET_CLASS (gtk_list_box_parent_class)->show (widget, NULL);
 }
 
 static gboolean
@@ -3448,12 +3449,12 @@ gtk_list_box_row_activate (GtkListBoxRow *row)
 }
 
 static void
-gtk_list_box_row_show (GtkWidget *widget)
+gtk_list_box_row_show (GtkWidget *widget, gpointer cb_data)
 {
   GtkListBoxRow *row = GTK_LIST_BOX_ROW (widget);
   GtkListBox *box;
 
-  GTK_WIDGET_CLASS (gtk_list_box_row_parent_class)->show (widget);
+  GTK_WIDGET_CLASS (gtk_list_box_row_parent_class)->show (widget, NULL);
 
   box = gtk_list_box_row_get_box (row);
   if (box)

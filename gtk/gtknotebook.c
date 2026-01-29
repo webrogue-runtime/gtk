@@ -849,7 +849,8 @@ static void gtk_notebook_motion              (GtkEventController *controller,
                                               double              y,
                                               gpointer            user_data);
 static void gtk_notebook_state_flags_changed (GtkWidget          *widget,
-                                              GtkStateFlags       previous_state);
+                                              GtkStateFlags       previous_state,
+                                              gpointer            cb_data);
 static void gtk_notebook_direction_changed   (GtkWidget        *widget,
                                               GtkTextDirection  previous_direction);
 static gboolean gtk_notebook_focus           (GtkWidget        *widget,
@@ -3163,7 +3164,8 @@ update_arrow_state (GtkNotebook *notebook)
 
 static void
 gtk_notebook_state_flags_changed (GtkWidget     *widget,
-                                  GtkStateFlags  previous_state)
+                                  GtkStateFlags  previous_state,
+                                  gpointer       cb_data)
 {
   if (!gtk_widget_is_sensitive (widget))
     stop_scrolling (GTK_NOTEBOOK (widget));

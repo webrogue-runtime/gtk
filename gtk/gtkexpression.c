@@ -739,10 +739,10 @@ gtk_expression_get_type (void)
 }
 
 static void
-gtk_expression_generic_class_init (gpointer g_class,
-                                   gpointer class_data)
+gtk_expression_generic_class_init (gpointer g_class
+                                       G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
-  GtkExpressionTypeInfo *info = class_data;
+  GtkExpressionTypeInfo *info = G_INIT_FUNC_GET_CLASS (class_data);
   GtkExpressionClass *expression_class = g_class;
 
   /* Mandatory */

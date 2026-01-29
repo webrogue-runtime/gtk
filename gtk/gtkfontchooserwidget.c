@@ -785,7 +785,7 @@ update_key_capture (GtkWidget *chooser)
 }
 
 static void
-gtk_font_chooser_widget_map (GtkWidget *widget)
+gtk_font_chooser_widget_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkFontChooserWidget *fontchooser = GTK_FONT_CHOOSER_WIDGET (widget);   
   gtk_widget_set_sensitive (GTK_WIDGET (fontchooser->language_frame), FALSE);
@@ -794,7 +794,7 @@ gtk_font_chooser_widget_map (GtkWidget *widget)
   gtk_editable_set_text (GTK_EDITABLE (fontchooser->search_entry), "");
   gtk_stack_set_visible_child_name (GTK_STACK (fontchooser->stack), "list");
   g_simple_action_set_state (G_SIMPLE_ACTION (fontchooser->tweak_action), g_variant_new_boolean (FALSE));
-  GTK_WIDGET_CLASS (gtk_font_chooser_widget_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_font_chooser_widget_parent_class)->map (widget, NULL);
   update_key_capture (widget);
 }
 

@@ -388,10 +388,10 @@ gtk_popover_menu_dispose (GObject *object)
 }
 
 static void
-gtk_popover_menu_map (GtkWidget *widget)
+gtk_popover_menu_map (GtkWidget *widget, gpointer cb_data)
 {
   gtk_popover_menu_open_submenu (GTK_POPOVER_MENU (widget), "main");
-  GTK_WIDGET_CLASS (gtk_popover_menu_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_popover_menu_parent_class)->map (widget, NULL);
 }
 
 static void
@@ -567,11 +567,11 @@ add_arrow_bindings (GtkWidgetClass   *widget_class,
 }
 
 static void
-gtk_popover_menu_show (GtkWidget *widget)
+gtk_popover_menu_show (GtkWidget *widget, gpointer cb_data)
 {
   gtk_popover_menu_set_open_submenu (GTK_POPOVER_MENU (widget), NULL);
 
-  GTK_WIDGET_CLASS (gtk_popover_menu_parent_class)->show (widget);
+  GTK_WIDGET_CLASS (gtk_popover_menu_parent_class)->show (widget, NULL);
 }
 
 static void

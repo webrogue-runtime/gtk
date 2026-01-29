@@ -126,8 +126,8 @@ gsk_copy_node_replay (GskRenderNode   *node,
 }
 
 static void
-gsk_copy_node_class_init (gpointer g_class,
-                           gpointer class_data)
+gsk_copy_node_class_init (gpointer g_class
+                              G_DEFINE_INIT_FUNC_CLASS_PARAM (class_data))
 {
   GskRenderNodeClass *node_class = g_class;
 

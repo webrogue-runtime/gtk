@@ -308,12 +308,12 @@ G_GNUC_END_IGNORE_DEPRECATIONS
 }
 
 static void
-gtk_gl_area_realize (GtkWidget *widget)
+gtk_gl_area_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkGLArea *area = GTK_GL_AREA (widget);
   GtkGLAreaPrivate *priv = gtk_gl_area_get_instance_private (area);
 
-  GTK_WIDGET_CLASS (gtk_gl_area_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_gl_area_parent_class)->realize (widget, NULL);
 
   g_clear_error (&priv->error);
   priv->context = NULL;
@@ -330,7 +330,8 @@ gtk_gl_area_realize (GtkWidget *widget)
 
 static void
 gtk_gl_area_notify (GObject    *object,
-                    GParamSpec *pspec)
+                    GParamSpec *pspec,
+                    gpointer    cb_data)
 {
   if (strcmp (pspec->name, "scale-factor") == 0)
     {
@@ -341,7 +342,7 @@ gtk_gl_area_notify (GObject    *object,
     }
 
   if (G_OBJECT_CLASS (gtk_gl_area_parent_class)->notify)
-    G_OBJECT_CLASS (gtk_gl_area_parent_class)->notify (object, pspec);
+    G_OBJECT_CLASS (gtk_gl_area_parent_class)->notify (object, pspec, NULL);
 }
 
 static GdkGLContext *

@@ -97,7 +97,8 @@ struct _GtkCssProviderClass
 
   void (* parsing_error)                        (GtkCssProvider  *provider,
                                                  GtkCssSection   *section,
-                                                 const GError *   error);
+                                                 const GError *   error,
+                                                 gpointer         cb_data);
 };
 
 typedef struct GtkCssRuleset GtkCssRuleset;
@@ -182,7 +183,8 @@ static void gtk_css_provider_set_property     (GObject               *object,
                                                const GValue          *value,
                                                GParamSpec            *pspec);
 static void gtk_css_provider_notify           (GObject               *object,
-                                               GParamSpec            *pspec);
+                                               GParamSpec            *pspec,
+                                               gpointer               cb_data);
 static void gtk_css_style_provider_iface_init (GtkStyleProviderInterface *iface);
 static void gtk_css_style_provider_emit_error (GtkStyleProvider *provider,
                                                GtkCssSection    *section,
@@ -204,7 +206,8 @@ G_DEFINE_TYPE_EXTENDED (GtkCssProvider, gtk_css_provider, G_TYPE_OBJECT, 0,
 static void
 gtk_css_provider_parsing_error (GtkCssProvider  *provider,
                                 GtkCssSection   *section,
-                                const GError    *error)
+                                const GError    *error,
+                                gpointer         cb_data)
 {
   /* Only emit a warning when we have no error handlers. This is our
    * default handlers. And in this case erroneous CSS files are a bug
@@ -934,7 +937,8 @@ maybe_rerender_style_sheet (GtkCssProvider *css_provider)
 
 static void
 gtk_css_provider_notify (GObject    *object,
-                         GParamSpec *pspec)
+                         GParamSpec *pspec,
+                         gpointer    cb_data)
 {
   GtkCssProvider *css_provider = GTK_CSS_PROVIDER (object);
 

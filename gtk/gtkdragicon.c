@@ -196,7 +196,7 @@ surface_compute_size (GdkDragSurface     *surface,
 }
 
 static void
-gtk_drag_icon_realize (GtkWidget *widget)
+gtk_drag_icon_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkDragIcon *icon = GTK_DRAG_ICON (widget);
 
@@ -207,7 +207,7 @@ gtk_drag_icon_realize (GtkWidget *widget)
   g_signal_connect (icon->surface, "render", G_CALLBACK (surface_render), widget);
   g_signal_connect (icon->surface, "compute-size", G_CALLBACK (surface_compute_size), widget);
 
-  GTK_WIDGET_CLASS (gtk_drag_icon_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_drag_icon_parent_class)->realize (widget, NULL);
 
   icon->renderer = gsk_renderer_new_for_surface_full (icon->surface, TRUE);
 
@@ -235,13 +235,13 @@ gtk_drag_icon_unrealize (GtkWidget *widget)
 }
 
 static void
-gtk_drag_icon_map (GtkWidget *widget)
+gtk_drag_icon_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkDragIcon *icon = GTK_DRAG_ICON (widget);
 
   gtk_drag_icon_move_resize (icon);
 
-  GTK_WIDGET_CLASS (gtk_drag_icon_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_drag_icon_parent_class)->map (widget, NULL);
 
   if (icon->child && gtk_widget_get_visible (icon->child))
     gtk_widget_map (icon->child);
@@ -292,7 +292,7 @@ gtk_drag_icon_size_allocate (GtkWidget *widget,
 }
 
 static void
-gtk_drag_icon_show (GtkWidget *widget)
+gtk_drag_icon_show (GtkWidget *widget, gpointer cb_data)
 {
   _gtk_widget_set_visible_flag (widget, TRUE);
   gtk_css_node_validate (gtk_widget_get_css_node (widget));

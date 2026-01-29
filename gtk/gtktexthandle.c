@@ -242,7 +242,7 @@ gtk_text_handle_snapshot (GtkWidget   *widget,
 }
 
 static void
-gtk_text_handle_realize (GtkWidget *widget)
+gtk_text_handle_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkTextHandle *handle = GTK_TEXT_HANDLE (widget);
   GdkSurface *parent_surface;
@@ -263,7 +263,7 @@ gtk_text_handle_realize (GtkWidget *widget)
                             G_CALLBACK (surface_mapped_changed), widget);
   g_signal_connect (handle->surface, "render", G_CALLBACK (surface_render), widget);
 
-  GTK_WIDGET_CLASS (gtk_text_handle_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_text_handle_parent_class)->realize (widget, NULL);
 
   handle->renderer = gsk_renderer_new_for_surface_full (handle->surface, TRUE);
 
@@ -332,7 +332,7 @@ surface_transform_changed_cb (GtkWidget               *widget,
 }
 
 static void
-gtk_text_handle_map (GtkWidget *widget)
+gtk_text_handle_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkTextHandle *handle = GTK_TEXT_HANDLE (widget);
 
@@ -342,7 +342,7 @@ gtk_text_handle_map (GtkWidget *widget)
                                                        widget,
                                                        unset_surface_transform_changed_cb);
 
-  GTK_WIDGET_CLASS (gtk_text_handle_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_text_handle_parent_class)->map (widget, NULL);
 
   if (handle->has_point)
     {

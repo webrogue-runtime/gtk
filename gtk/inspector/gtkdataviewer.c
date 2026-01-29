@@ -88,11 +88,11 @@ gtk_data_viewer_ensure_loaded (GtkDataViewer *self)
 }
 
 static void
-gtk_data_viewer_realize (GtkWidget *widget)
+gtk_data_viewer_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkDataViewer *self = GTK_DATA_VIEWER (widget);
 
-  GTK_WIDGET_CLASS (gtk_data_viewer_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_data_viewer_parent_class)->realize (widget, NULL);
 
   gtk_data_viewer_ensure_loaded (self);
 }

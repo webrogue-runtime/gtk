@@ -810,13 +810,13 @@ static gboolean toplevel_filter_func (gpointer item,
                                       gpointer data);
 
 static void
-map (GtkWidget *widget)
+map (GtkWidget *widget, gpointer cb_data)
 {
   GtkInspectorObjectTree *wt = GTK_INSPECTOR_OBJECT_TREE (widget);
   GtkEventController *controller;
   GtkWidget *toplevel;
 
-  GTK_WIDGET_CLASS (gtk_inspector_object_tree_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_inspector_object_tree_parent_class)->map (widget, NULL);
 
   toplevel = GTK_WIDGET (gtk_widget_get_root (widget));
 

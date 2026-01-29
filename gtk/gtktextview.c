@@ -436,9 +436,11 @@ static void gtk_text_view_size_allocate        (GtkWidget           *widget,
                                                 int                  width,
                                                 int                  height,
                                                 int                  baseline);
-static void gtk_text_view_realize              (GtkWidget           *widget);
+static void gtk_text_view_realize              (GtkWidget           *widget,
+                                                gpointer             cb_data);
 static void gtk_text_view_unrealize            (GtkWidget           *widget);
-static void gtk_text_view_map                  (GtkWidget           *widget);
+static void gtk_text_view_map                  (GtkWidget           *widget,
+                                                gpointer             cb_data);
 static void gtk_text_view_css_changed          (GtkWidget           *widget,
                                                 GtkCssStyleChange   *change);
 static void gtk_text_view_direction_changed    (GtkWidget        *widget,
@@ -446,7 +448,8 @@ static void gtk_text_view_direction_changed    (GtkWidget        *widget,
 static void gtk_text_view_system_setting_changed (GtkWidget           *widget,
                                                   GtkSystemSetting     setting);
 static void gtk_text_view_state_flags_changed  (GtkWidget        *widget,
-					        GtkStateFlags     previous_state);
+                                                GtkStateFlags     previous_state,
+                                                gpointer          cb_data);
 
 static void gtk_text_view_click_gesture_pressed (GtkGestureClick *gesture,
                                                  int                   n_press,
@@ -875,13 +878,14 @@ add_move_binding (GtkWidgetClass *widget_class,
 
 static void
 gtk_text_view_notify (GObject    *object,
-                      GParamSpec *pspec)
+                      GParamSpec *pspec,
+                      gpointer    cb_data)
 {
   if (pspec->name == I_("has-focus"))
     gtk_text_view_check_cursor_blink (GTK_TEXT_VIEW (object));
 
   if (G_OBJECT_CLASS (gtk_text_view_parent_class)->notify)
-    G_OBJECT_CLASS (gtk_text_view_parent_class)->notify (object, pspec);
+    G_OBJECT_CLASS (gtk_text_view_parent_class)->notify (object, pspec, NULL);
 }
 
 static void
@@ -5218,7 +5222,7 @@ changed_handler (GtkTextLayout     *layout,
 }
 
 static void
-gtk_text_view_realize (GtkWidget *widget)
+gtk_text_view_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkTextView *text_view;
   GtkTextViewPrivate *priv;
@@ -5226,7 +5230,7 @@ gtk_text_view_realize (GtkWidget *widget)
   text_view = GTK_TEXT_VIEW (widget);
   priv = text_view->priv;
 
-  GTK_WIDGET_CLASS (gtk_text_view_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_text_view_parent_class)->realize (widget, NULL);
 
   if (gtk_widget_is_sensitive (widget))
     {
@@ -5272,11 +5276,11 @@ gtk_text_view_unrealize (GtkWidget *widget)
 }
 
 static void
-gtk_text_view_map (GtkWidget *widget)
+gtk_text_view_map (GtkWidget *widget, gpointer cb_data)
 {
   gtk_widget_set_cursor_from_name (widget, "text");
 
-  GTK_WIDGET_CLASS (gtk_text_view_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_text_view_parent_class)->map (widget, NULL);
 }
 
 static void
@@ -5363,7 +5367,8 @@ gtk_text_view_system_setting_changed (GtkWidget        *widget,
 
 static void
 gtk_text_view_state_flags_changed (GtkWidget     *widget,
-                                   GtkStateFlags  previous_state)
+                                   GtkStateFlags  previous_state,
+                                   gpointer       cb_data)
 {
   GtkTextView *text_view = GTK_TEXT_VIEW (widget);
   GtkTextViewPrivate *priv = text_view->priv;

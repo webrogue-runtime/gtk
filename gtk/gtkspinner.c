@@ -129,11 +129,11 @@ gtk_spinner_snapshot (GtkWidget   *widget,
 }
 
 static void
-gtk_spinner_map (GtkWidget *widget)
+gtk_spinner_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkSpinner *spinner = GTK_SPINNER (widget);
 
-  GTK_WIDGET_CLASS (gtk_spinner_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_spinner_parent_class)->map (widget, NULL);
 
   update_state_flags (spinner);
 }

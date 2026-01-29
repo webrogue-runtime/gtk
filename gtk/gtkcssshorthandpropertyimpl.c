@@ -678,14 +678,30 @@ parse_transition_timing_function (GtkCssParser *parser,
 }
 
 static gboolean
+adapted_gtk_css_ease_value_can_parse (GtkCssParser *parser,
+                                      gpointer      option_data,
+                                      gpointer      user_data)
+{
+  return _gtk_css_ease_value_can_parse (parser);
+}
+
+static gboolean
+adapted_gtk_css_number_value_can_parse (GtkCssParser *parser,
+                                        gpointer      option_data,
+                                        gpointer      user_data)
+{
+  return gtk_css_number_value_can_parse (parser);
+}
+
+static gboolean
 parse_one_transition (GtkCssShorthandProperty  *shorthand,
                       GtkCssValue             **values,
                       GtkCssParser             *parser)
 {
   const GtkCssParseOption options[] = {
-    { (void *) _gtk_css_ease_value_can_parse, parse_transition_timing_function, &values[3] },
-    { (void *) gtk_css_number_value_can_parse, parse_transition_time, &values[1] },
-    { (void *) gtk_css_number_value_can_parse, parse_transition_time, &values[2] },
+    { (void *) adapted_gtk_css_ease_value_can_parse, parse_transition_timing_function, &values[3] },
+    { (void *) adapted_gtk_css_number_value_can_parse, parse_transition_time, &values[1] },
+    { (void *) adapted_gtk_css_number_value_can_parse, parse_transition_time, &values[2] },
     { (void *) has_transition_property, parse_transition_property, &values[0] },
   };
 

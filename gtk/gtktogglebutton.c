@@ -262,12 +262,12 @@ get_group_first (GtkToggleButton *self)
 }
 
 static void
-gtk_toggle_button_realize (GtkWidget *widget)
+gtk_toggle_button_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkToggleButton *self = GTK_TOGGLE_BUTTON (widget);
   GtkToggleButtonPrivate *priv = gtk_toggle_button_get_instance_private (self);
 
-  GTK_WIDGET_CLASS (gtk_toggle_button_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_toggle_button_parent_class)->realize (widget, NULL);
 
   gtk_accessible_update_state (GTK_ACCESSIBLE (widget),
                                GTK_ACCESSIBLE_STATE_PRESSED, priv->active,

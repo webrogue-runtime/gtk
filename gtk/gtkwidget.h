@@ -191,11 +191,14 @@ struct _GtkWidgetClass
   /*< public >*/
 
   /* basics */
-  void (* show)                (GtkWidget        *widget);
+  void (* show)                (GtkWidget        *widget,
+                                gpointer          cb_data);
   void (* hide)                (GtkWidget        *widget);
-  void (* map)                 (GtkWidget        *widget);
+  void (* map)                 (GtkWidget        *widget,
+                                gpointer          cb_data);
   void (* unmap)               (GtkWidget        *widget);
-  void (* realize)             (GtkWidget        *widget);
+  void (* realize)             (GtkWidget        *widget,
+                                gpointer          cb_data);
   void (* unrealize)           (GtkWidget        *widget);
   void (* root)                (GtkWidget        *widget);
   void (* unroot)              (GtkWidget        *widget);
@@ -204,7 +207,8 @@ struct _GtkWidgetClass
                                 int                  height,
                                 int                  baseline);
   void (* state_flags_changed) (GtkWidget        *widget,
-                                GtkStateFlags     previous_state_flags);
+                                GtkStateFlags     previous_state_flags,
+                                gpointer          cb_data);
   void (* direction_changed)   (GtkWidget        *widget,
                                 GtkTextDirection  previous_direction);
 

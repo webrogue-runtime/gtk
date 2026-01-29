@@ -519,12 +519,12 @@ go_next_cb (GtkWidget          *button,
 }
 
 static void
-gtk_inspector_window_realize (GtkWidget *widget)
+gtk_inspector_window_realize (GtkWidget *widget, gpointer cb_data)
 {
   GskRenderer *renderer;
   GtkCssProvider *provider;
 
-  GTK_WIDGET_CLASS (gtk_inspector_window_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_inspector_window_parent_class)->realize (widget, NULL);
 
   renderer = gtk_native_get_renderer (GTK_NATIVE (widget));
   gsk_renderer_set_debug_flags (renderer, 0);

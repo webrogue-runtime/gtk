@@ -203,7 +203,8 @@ struct _GdkDisplayClass
                                                         int             size);
 
   /* Signals */
-  void                   (*opened)                     (GdkDisplay     *display);
+  void                   (*opened)                     (GdkDisplay     *display,
+                                                        gpointer data);
   void                   (*closed)                     (GdkDisplay     *display,
                                                         gboolean        is_error);
 };

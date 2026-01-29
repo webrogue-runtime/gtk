@@ -476,7 +476,8 @@ get_group_active_button (GtkCheckButton *self)
 
 static void
 gtk_check_button_state_flags_changed (GtkWidget     *widget,
-                                      GtkStateFlags  previous_flags)
+                                      GtkStateFlags  previous_flags,
+                                      gpointer       cb_data)
 {
   GtkCheckButton *self = GTK_CHECK_BUTTON (widget);
   GtkCheckButtonPrivate *priv = gtk_check_button_get_instance_private (self);
@@ -484,7 +485,7 @@ gtk_check_button_state_flags_changed (GtkWidget     *widget,
 
   gtk_widget_set_state_flags (priv->indicator_widget, state, TRUE);
 
-  GTK_WIDGET_CLASS (gtk_check_button_parent_class)->state_flags_changed (widget, previous_flags);
+  GTK_WIDGET_CLASS (gtk_check_button_parent_class)->state_flags_changed (widget, previous_flags, NULL);
 }
 
 static gboolean

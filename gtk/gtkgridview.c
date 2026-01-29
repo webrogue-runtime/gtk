@@ -937,11 +937,11 @@ gtk_grid_view_unroot (GtkWidget *widget)
 }
 
 static void
-gtk_grid_view_show (GtkWidget *widget)
+gtk_grid_view_show (GtkWidget *widget, gpointer cb_data)
 {
   GtkGridView *self = GTK_GRID_VIEW (widget);
 
-  GTK_WIDGET_CLASS (gtk_grid_view_parent_class)->show (widget);
+  GTK_WIDGET_CLASS (gtk_grid_view_parent_class)->show (widget, NULL);
 
   if (!gtk_grid_view_is_inert (self))
     gtk_grid_view_update_factories (self);

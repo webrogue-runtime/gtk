@@ -208,7 +208,7 @@ gdk_display_real_get_default_seat (GdkDisplay *display)
 }
 
 static void
-gdk_display_real_opened (GdkDisplay *display)
+gdk_display_real_opened (GdkDisplay *display, gpointer data)
 {
   _gdk_display_manager_add_display (gdk_display_manager_get (), display);
 }

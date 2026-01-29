@@ -378,9 +378,11 @@ static void     gtk_scrolled_window_measure (GtkWidget      *widget,
                                              int            *natural_size,
                                              int            *minimum_baseline,
                                              int            *natural_baseline);
-static void  gtk_scrolled_window_map                   (GtkWidget           *widget);
+static void  gtk_scrolled_window_map                   (GtkWidget           *widget,
+                                                        gpointer             cb_data);
 static void  gtk_scrolled_window_unmap                 (GtkWidget           *widget);
-static void  gtk_scrolled_window_realize               (GtkWidget           *widget);
+static void  gtk_scrolled_window_realize               (GtkWidget           *widget,
+                                                        gpointer             cb_data);
 static void  gtk_scrolled_window_unrealize             (GtkWidget           *widget);
 static void _gtk_scrolled_window_set_adjustment_value  (GtkScrolledWindow *scrolled_window,
                                                         GtkAdjustment     *adjustment,
@@ -3710,11 +3712,11 @@ gtk_scrolled_window_update_animating (GtkScrolledWindow *sw)
 }
 
 static void
-gtk_scrolled_window_map (GtkWidget *widget)
+gtk_scrolled_window_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkScrolledWindow *scrolled_window = GTK_SCROLLED_WINDOW (widget);
 
-  GTK_WIDGET_CLASS (gtk_scrolled_window_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_scrolled_window_parent_class)->map (widget, NULL);
 
   gtk_scrolled_window_update_animating (scrolled_window);
   gtk_scrolled_window_update_use_indicators (scrolled_window);
@@ -3951,7 +3953,7 @@ gtk_scrolled_window_update_use_indicators (GtkScrolledWindow *scrolled_window)
 }
 
 static void
-gtk_scrolled_window_realize (GtkWidget *widget)
+gtk_scrolled_window_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkScrolledWindow *scrolled_window = GTK_SCROLLED_WINDOW (widget);
   GtkScrolledWindowPrivate *priv = gtk_scrolled_window_get_instance_private (scrolled_window);
@@ -3966,7 +3968,7 @@ gtk_scrolled_window_realize (GtkWidget *widget)
   g_signal_connect_swapped (settings, "notify::gtk-overlay-scrolling",
                             G_CALLBACK (gtk_scrolled_window_update_use_indicators), widget);
 
-  GTK_WIDGET_CLASS (gtk_scrolled_window_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_scrolled_window_parent_class)->realize (widget, NULL);
 }
 
 static void

@@ -604,10 +604,12 @@ static void     gtk_tree_view_get_property         (GObject         *object,
 						    GParamSpec      *pspec);
 
 /* gtkwidget signals */
-static void     gtk_tree_view_realize              (GtkWidget        *widget);
+static void gtk_tree_view_realize                  (GtkWidget        *widget,
+                                                    gpointer          cb_data);
 static void     gtk_tree_view_unrealize            (GtkWidget        *widget);
 static void     gtk_tree_view_unroot               (GtkWidget        *widget);
-static void     gtk_tree_view_map                  (GtkWidget        *widget);
+static void gtk_tree_view_map                      (GtkWidget        *widget,
+                                                    gpointer          cb_data);
 static void     gtk_tree_view_measure              (GtkWidget        *widget,
                                                     GtkOrientation  orientation,
                                                     int             for_size,
@@ -2154,13 +2156,13 @@ gtk_tree_view_map_buttons (GtkTreeView *tree_view)
 }
 
 static void
-gtk_tree_view_map (GtkWidget *widget)
+gtk_tree_view_map (GtkWidget *widget, gpointer cb_data)
 {
   GtkTreeView *tree_view = GTK_TREE_VIEW (widget);
   GtkTreeViewPrivate *priv = gtk_tree_view_get_instance_private (tree_view);
   GList *tmp_list;
 
-  GTK_WIDGET_CLASS (gtk_tree_view_parent_class)->map (widget);
+  GTK_WIDGET_CLASS (gtk_tree_view_parent_class)->map (widget, NULL);
 
   tmp_list = priv->children;
   while (tmp_list)
@@ -2179,13 +2181,13 @@ gtk_tree_view_map (GtkWidget *widget)
 }
 
 static void
-gtk_tree_view_realize (GtkWidget *widget)
+gtk_tree_view_realize (GtkWidget *widget, gpointer cb_data)
 {
   GtkTreeView *tree_view = GTK_TREE_VIEW (widget);
   GtkTreeViewPrivate *priv = gtk_tree_view_get_instance_private (tree_view);
   GList *tmp_list;
 
-  GTK_WIDGET_CLASS (gtk_tree_view_parent_class)->realize (widget);
+  GTK_WIDGET_CLASS (gtk_tree_view_parent_class)->realize (widget, NULL);
 
   for (tmp_list = priv->columns; tmp_list; tmp_list = tmp_list->next)
     _gtk_tree_view_column_realize_button (GTK_TREE_VIEW_COLUMN (tmp_list->data));
