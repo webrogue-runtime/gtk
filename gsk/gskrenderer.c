@@ -58,6 +58,11 @@
 #include "broadway/gskbroadwayrenderer.h"
 #endif
 
+#ifdef GDK_WINDOWING_WEBROGUE
+#include <gdk/webrogue/gdkwebrogue.h>
+#include <webroguegfx/webroguegfx.h>
+#endif
+
 typedef struct
 {
   GObject parent_instance;
@@ -571,6 +576,15 @@ get_renderer_for_backend (GdkSurface *surface)
 #ifdef GDK_WINDOWING_BROADWAY
   if (GDK_IS_BROADWAY_SURFACE (surface))
     return GSK_TYPE_BROADWAY_RENDERER;
+#endif
+
+#ifdef GDK_WINDOWING_WEBROGUE
+  if (GDK_IS_WEBROGUE_SURFACE (surface)) {
+    if (webroguegfx_vulkan_check()) {
+      return GSK_TYPE_VULKAN_RENDERER;
+    }
+    return GSK_TYPE_CAIRO_RENDERER;
+  }
 #endif
 
   return G_TYPE_INVALID;

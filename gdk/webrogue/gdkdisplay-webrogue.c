@@ -185,8 +185,12 @@ gdk_webrogue_display_class_init (GdkWebrogueDisplayClass *class)
   display_class->cairo_context_type = GDK_TYPE_WEBROGUE_CAIRO_CONTEXT;
 
 #ifdef GDK_RENDERING_VULKAN
-  display_class->vk_context_type = GDK_TYPE_WEBROGUE_VULKAN_CONTEXT;
-  display_class->vk_extension_name = VK_WEBROGUE_SURFACE_EXTENSION_NAME;
+    display_class->vk_context_type = GDK_TYPE_WEBROGUE_VULKAN_CONTEXT;
+  if(webroguegfx_vulkan_check()) {
+    display_class->vk_extension_name = VK_WEBROGUE_SURFACE_EXTENSION_NAME;
+  } else {
+    display_class->vk_extension_name = NULL;
+  }
 #endif
 
   display_class->get_name = _gdk_webrogue_display_get_name;

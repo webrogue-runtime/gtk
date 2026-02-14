@@ -61,7 +61,7 @@ gdk_vulkan_context_webrogue_empty_frame (GdkDrawContext *context)
   // GdkSurface *surface = gdk_draw_context_get_surface (GDK_DRAW_CONTEXT (context));
 
   // gdk_webrogue_surface_handle_empty_frame (surface);
-  abort ();
+  // abort ();
 }
 
 static void

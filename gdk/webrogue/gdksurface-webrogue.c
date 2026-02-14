@@ -69,16 +69,16 @@ static void
 gdk_webrogue_surface_init (GdkWebrogueSurface *impl)
 {
   webroguegfx_make_window (&impl->wr_window);
-  int width, height;
+  // int width, height;
   int gl_width, gl_height;
-  webroguegfx_window_size (impl->wr_window, &width, &height);
+  // webroguegfx_window_size (impl->wr_window, &width, &height);
   webroguegfx_gl_size (impl->wr_window, &gl_width, &gl_height);
-  double scale = gl_width / width;
+  // double scale = gl_width / width;
 
   GdkSurface *surface = GDK_SURFACE (impl);
 
-  surface->width = width;
-  surface->height = height;
+  surface->width = gl_width;
+  surface->height = gl_height;
 
   gdk_surface_invalidate_rect (surface, NULL);
 
@@ -162,6 +162,7 @@ gdk_webrogue_surface_constructed (GObject *object)
 static void
 gdk_webrogue_surface_finalize (GObject *object)
 {
+  _gdk_webrogue_events_remove_surface (GDK_WEBROGUE_SURFACE (object));
 }
 
 static gboolean
@@ -308,7 +309,7 @@ gdk_webrogue_surface_get_geometry (GdkSurface *surface,
   int new_width, new_height;
   GdkWebrogueSurface *impl;
   impl = GDK_WEBROGUE_SURFACE (surface);
-  webroguegfx_window_size (impl->wr_window, &new_width, &new_height);
+  webroguegfx_gl_size (impl->wr_window, &new_width, &new_height);
 
   if (x)
     *x = surface->x;
@@ -578,6 +579,7 @@ G_DEFINE_TYPE_WITH_CODE (GdkWebrogueToplevel, gdk_webrogue_toplevel, GDK_TYPE_WE
 static void
 gdk_webrogue_toplevel_init (GdkWebrogueToplevel *toplevel)
 {
+  _gdk_webrogue_events_add_surface (GDK_WEBROGUE_SURFACE (toplevel));
 }
 
 static void

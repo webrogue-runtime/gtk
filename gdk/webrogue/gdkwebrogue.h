@@ -20,3 +20,4 @@
 #include <gdk/gdk.h>
 
 #include "gdkdisplay-webrogue.h"
+#include "gdksurface-webrogue.h"

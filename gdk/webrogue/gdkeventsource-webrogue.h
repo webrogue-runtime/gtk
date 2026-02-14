@@ -21,9 +21,9 @@
 
 G_BEGIN_DECLS
 
-typedef struct _GdkEventSource GdkEventSource;
-
 GSource *_gdk_webrogue_event_source_new (GdkDisplay *display);
 void _gdk_webrogue_display_queue_events (GdkDisplay *display);
+void _gdk_webrogue_events_add_surface (GdkWebrogueSurface *webrogue_surface);
+void _gdk_webrogue_events_remove_surface (GdkWebrogueSurface *webrogue_surface);
 
 G_END_DECLS

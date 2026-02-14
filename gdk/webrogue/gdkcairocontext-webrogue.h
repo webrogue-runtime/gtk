@@ -22,6 +22,8 @@
 
 #include "gdkcairocontextprivate.h"
 
+#include <webroguegfx/webroguegfx.h>
+
 G_BEGIN_DECLS
 
 #define GDK_TYPE_WEBROGUE_CAIRO_CONTEXT (gdk_webrogue_cairo_context_get_type ())
@@ -36,6 +38,10 @@ typedef struct _GdkWebrogueCairoContextClass GdkWebrogueCairoContextClass;
 
 struct _GdkWebrogueCairoContext
 {
+  GdkCairoContext parent_instance;
+  wr_window wr_window;
+  void* data;
+  int data_size;
 };
 
 struct _GdkWebrogueCairoContextClass
