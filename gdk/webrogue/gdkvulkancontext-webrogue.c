@@ -40,7 +40,7 @@ gdk_webrogue_vulkan_context_create_surface (GdkVulkanContext *context,
                            VK_STRUCTURE_TYPE_SURFACE_CREATE_INFO_WEBROGUE,
                            NULL,
                            0,
-                           gdk_webrogue_surface_get_wr_window (surface) },
+                           webroguegfx_get_vulkan_window_id(gdk_webrogue_surface_get_wr_window (surface)) },
                        NULL,
                        vr_surface);
 }
