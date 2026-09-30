@@ -22,7 +22,7 @@
 
 #include "gdkcairocontextprivate.h"
 
-#include <webroguegfx/webroguegfx.h>
+#include <libwr4c/wr4c.h>
 
 G_BEGIN_DECLS
 
@@ -39,7 +39,7 @@ typedef struct _GdkWebrogueCairoContextClass GdkWebrogueCairoContextClass;
 struct _GdkWebrogueCairoContext
 {
   GdkCairoContext parent_instance;
-  wr_window wr_window;
+  wr4c_window_t wr_window;
   void* data;
   int data_size;
 };

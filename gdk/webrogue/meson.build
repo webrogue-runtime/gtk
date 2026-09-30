@@ -17,7 +17,7 @@ gdk_webrogue_public_headers = files([
 install_headers(gdk_webrogue_public_headers, 'gdkwebrogue.h', subdir: 'gtk-4.0/gdk/webrogue/')
 
 gdk_webrogue_deps = [
-  dependency('webroguegfx', required: true)
+  dependency('libwr4c', required: true)
 ]
 
 libgdk_webrogue = static_library('gdk-webrogue',

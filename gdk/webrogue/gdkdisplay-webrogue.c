@@ -186,7 +186,7 @@ gdk_webrogue_display_class_init (GdkWebrogueDisplayClass *class)
 
 #ifdef GDK_RENDERING_VULKAN
     display_class->vk_context_type = GDK_TYPE_WEBROGUE_VULKAN_CONTEXT;
-  if(webroguegfx_vulkan_check()) {
+  if(wr4c_vulkan_check()) {
     display_class->vk_extension_name = VK_WEBROGUE_SURFACE_EXTENSION_NAME;
   } else {
     display_class->vk_extension_name = NULL;

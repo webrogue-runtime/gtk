@@ -28,4 +28,4 @@ GdkDrag *_gdk_webrogue_surface_drag_begin (GdkSurface *surface,
                                            double dx,
                                            double dy);
 GdkDisplay *_gdk_webrogue_display_open (const char *display_name);
-wr_window gdk_webrogue_surface_get_wr_window (GdkSurface *surface);
+wr4c_window_t gdk_webrogue_surface_get_wr4c_window (GdkSurface *surface);

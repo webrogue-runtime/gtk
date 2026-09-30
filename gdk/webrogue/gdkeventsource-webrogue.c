@@ -23,7 +23,7 @@
 #include "gdkframeclockprivate.h"
 #include "gdksurfaceprivate.h"
 
-#include <webroguegfx/webroguegfx.h>
+#include <libwr4c/wr4c.h>
 #include <stdlib.h>
 
 
@@ -32,7 +32,7 @@ static GList *registered_surfaces = NULL;
 static void resize_window(GdkWebrogueSurface *webrogue_surface, gpointer userdata) {
   GdkSurface *surface = GDK_SURFACE (webrogue_surface);
   int w, h;
-  webroguegfx_gl_size(webrogue_surface->wr_window, &w, &h);
+  wr4c_gl_size(webrogue_surface->wr_window, &w, &h);
   if (surface->width != w ||
       surface->height != h)
     {
@@ -63,7 +63,7 @@ typedef struct GdkEventSource
 {
   GSource source;
 
-  webrogue_event current_wr_event;
+  wr4c_event_t current_wr_event;
   GdkDisplay *display;
 } GdkEventSource;
 
@@ -71,24 +71,22 @@ static gboolean
 _gdk_event_source_check (GSource *source)
 {
   GdkEventSource *event_source = (GdkEventSource *) source;
-  // if(event_source->current_wr_event.type != WEBROGUE_EVENT_TYPE_INVALID) {
+  // if(event_source->current_wr_event.tag != WR4C_EVENT_TAG_INVALID) {
   //   return TRUE;
   // }
-  // event_source->current_wr_event = webroguegfx_poll();
+  // event_source->current_wr_event = wr4c_poll();
   while(true) {
-    webrogue_event current_wr_event = webroguegfx_poll();
+    wr4c_event_t current_wr_event = wr4c_poll();
 
-    switch (current_wr_event.type) {
-      case WEBROGUE_EVENT_TYPE_WINDOW_RESIZED:
-        resize_all_windows();
-        break;
-      case WEBROGUE_EVENT_TYPE_GL_RESIZED:
+    switch (current_wr_event.tag) {
+      case WR4C_EVENT_TAG_GL_RESIZED:
+      case WR4C_EVENT_TAG_WINDOW_RESIZED:
         resize_all_windows();
         break;
       default:
         break;
     }
-    if (current_wr_event.type == WEBROGUE_EVENT_TYPE_INVALID) {
+    if (current_wr_event.tag == WR4C_EVENT_TAG_INVALID) {
       break;
     }
   }
@@ -151,7 +149,7 @@ _gdk_webrogue_event_source_new (GdkDisplay *display)
   g_source_set_name (source, name);
   g_free (name);
   event_source = (GdkEventSource *) source;
-  event_source->current_wr_event.type = WEBROGUE_EVENT_TYPE_INVALID;
+  event_source->current_wr_event.tag = WR4C_EVENT_TAG_INVALID;
   event_source->display = display;
 
   g_source_set_priority (source, GDK_PRIORITY_EVENTS);

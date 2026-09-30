@@ -60,7 +60,7 @@
 
 #ifdef GDK_WINDOWING_WEBROGUE
 #include <gdk/webrogue/gdkwebrogue.h>
-#include <webroguegfx/webroguegfx.h>
+#include <libwr4c/wr4c.h>
 #endif
 
 typedef struct
@@ -580,7 +580,7 @@ get_renderer_for_backend (GdkSurface *surface)
 
 #ifdef GDK_WINDOWING_WEBROGUE
   if (GDK_IS_WEBROGUE_SURFACE (surface)) {
-    if (webroguegfx_vulkan_check()) {
+    if (wr4c_vulkan_check()) {
       return GSK_TYPE_VULKAN_RENDERER;
     }
     return GSK_TYPE_CAIRO_RENDERER;

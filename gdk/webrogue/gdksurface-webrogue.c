@@ -68,11 +68,11 @@ on_frame_clock_after_update (GdkFrameClock *clock,
 static void
 gdk_webrogue_surface_init (GdkWebrogueSurface *impl)
 {
-  webroguegfx_make_window (&impl->wr_window);
+  wr4c_make_window (&impl->wr_window);
   // int width, height;
   int gl_width, gl_height;
-  // webroguegfx_window_size (impl->wr_window, &width, &height);
-  webroguegfx_gl_size (impl->wr_window, &gl_width, &gl_height);
+  // wr4c_window_size (impl->wr_window, &width, &height);
+  wr4c_gl_size (impl->wr_window, &gl_width, &gl_height);
   // double scale = gl_width / width;
 
   GdkSurface *surface = GDK_SURFACE (impl);
@@ -309,7 +309,7 @@ gdk_webrogue_surface_get_geometry (GdkSurface *surface,
   int new_width, new_height;
   GdkWebrogueSurface *impl;
   impl = GDK_WEBROGUE_SURFACE (surface);
-  webroguegfx_gl_size (impl->wr_window, &new_width, &new_height);
+  wr4c_gl_size (impl->wr_window, &new_width, &new_height);
 
   if (x)
     *x = surface->x;
@@ -826,8 +826,8 @@ gdk_webrogue_drag_surface_iface_init (GdkDragSurfaceInterface *iface)
   iface->present = gdk_webrogue_drag_surface_present;
 }
 
-wr_window
-gdk_webrogue_surface_get_wr_window (GdkSurface *surface)
+wr4c_window_t
+gdk_webrogue_surface_get_wr4c_window (GdkSurface *surface)
 {
   GdkWebrogueSurface *impl;
 

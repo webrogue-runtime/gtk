@@ -165,7 +165,7 @@ elif host_machine.system() == 'android'
   os_android = true
 elif host_machine.system() == 'linux'
   os_linux = true
-elif host_machine.system() == 'wasip1'
+elif host_machine.system().startswith('wasi')
   os_wasi = true
 endif
 os_unix = not os_win32
@@ -728,7 +728,7 @@ endif
 # Uses meson's custom vulkan dependency searching. Set the VULKAN_SDK env var
 # to use a custom path for the Vulkan SDK. Bugs that are found with it should
 # be reported upstream and fixed.
-if host_machine.system() == 'wasip1'
+if os_wasi
   # have_vulkan = true
   # vulkan_pkg_found = false
   # vulkan_dep = cc.find_library('vulkan',
@@ -960,11 +960,11 @@ subdir('gdk')
 subdir('gsk')
 subdir('gtk')
 
-if host_machine.system() != 'wasip1'
+if not os_wasi
 subdir('tools')
 endif
 subdir('po')
-if host_machine.system() != 'wasip1'
+if not os_wasi
 subdir('docs/reference')
 endif
 if get_option('build-demos')
@@ -1094,7 +1094,7 @@ summary('Display backends', enabled_backends, section: 'Components')
 summary('Print backends', print_backends, section: 'Components')
 summary('Media backends', media_backends, section: 'Components')
 
-if host_machine.system() == 'wasip1'
+if os_wasi
 summary('Vulkan support', true, section: 'Features')
 else
 summary('Vulkan support', vulkan_dep.found(), section: 'Features')

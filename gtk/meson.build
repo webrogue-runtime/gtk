@@ -1148,7 +1148,7 @@ libgtk_static = static_library('gtk',
   install: true,
 )
 
-if host_machine.system() != 'wasip1'
+if not os_wasi
 libgtk = shared_library('gtk-4',
   c_args: gtk_cargs + common_cflags,
   include_directories: [confinc, gdkinc, gskinc, gtkinc],
@@ -1354,6 +1354,6 @@ libgtk_static_dep = declare_dependency(sources: gtk_dep_sources,
   link_args: common_ldflags,
 )
 
-if host_machine.system() != 'wasip1'
+if not os_wasi
 subdir('compose')
 endif

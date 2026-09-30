@@ -19,7 +19,7 @@
 
 #include "gdksurface-webrogue.h"
 #include <gdk/gdksurfaceprivate.h>
-#include <webroguegfx/webroguegfx.h>
+#include <libwr4c/wr4c.h>
 
 G_BEGIN_DECLS
 
@@ -34,7 +34,7 @@ GType gdk_webrogue_drag_surface_get_type (void) G_GNUC_CONST;
 struct _GdkWebrogueSurface
 {
   GdkSurface parent_instance;
-  wr_window wr_window;
+  wr4c_window_t wr_window;
 };
 
 struct _GdkWebrogueSurfaceClass
