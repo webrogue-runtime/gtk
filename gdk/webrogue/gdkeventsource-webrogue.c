@@ -32,7 +32,7 @@ static GList *registered_surfaces = NULL;
 static void resize_window(GdkWebrogueSurface *webrogue_surface, gpointer userdata) {
   GdkSurface *surface = GDK_SURFACE (webrogue_surface);
   int w, h;
-  wr4c_gl_size(webrogue_surface->wr_window, &w, &h);
+  wr4c_physical_size(webrogue_surface->wr_window, &w, &h);
   if (surface->width != w ||
       surface->height != h)
     {
@@ -79,8 +79,7 @@ _gdk_event_source_check (GSource *source)
     wr4c_event_t current_wr_event = wr4c_poll();
 
     switch (current_wr_event.tag) {
-      case WR4C_EVENT_TAG_GL_RESIZED:
-      case WR4C_EVENT_TAG_WINDOW_RESIZED:
+      case WR4C_EVENT_TAG_RESIZED:
         resize_all_windows();
         break;
       default:

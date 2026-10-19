@@ -71,8 +71,8 @@ gdk_webrogue_surface_init (GdkWebrogueSurface *impl)
   wr4c_make_window (&impl->wr_window);
   // int width, height;
   int gl_width, gl_height;
-  // wr4c_window_size (impl->wr_window, &width, &height);
-  wr4c_gl_size (impl->wr_window, &gl_width, &gl_height);
+  // wr4c_logical_size (impl->wr_window, &width, &height);
+  wr4c_physical_size (impl->wr_window, &gl_width, &gl_height);
   // double scale = gl_width / width;
 
   GdkSurface *surface = GDK_SURFACE (impl);
@@ -309,7 +309,7 @@ gdk_webrogue_surface_get_geometry (GdkSurface *surface,
   int new_width, new_height;
   GdkWebrogueSurface *impl;
   impl = GDK_WEBROGUE_SURFACE (surface);
-  wr4c_gl_size (impl->wr_window, &new_width, &new_height);
+  wr4c_physical_size (impl->wr_window, &new_width, &new_height);
 
   if (x)
     *x = surface->x;

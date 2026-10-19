@@ -78,7 +78,7 @@ _gdk_webrogue_cairo_context_cairo_create (GdkCairoContext *cairo_context)
   
   self->wr_window = webrogue_surface->wr_window;
   int width, height;
-  wr4c_gl_size(self->wr_window, &width, &height);
+  wr4c_physical_size(self->wr_window, &width, &height);
   self->data_size = 4 * width * height;
   self->data = self->data ? realloc(self->data, self->data_size) : malloc(self->data_size);
   int stride = 4 * width;
